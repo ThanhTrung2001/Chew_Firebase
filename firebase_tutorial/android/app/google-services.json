@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "992669361485",
+    "project_id": "fir-learning-dd25c",
+    "storage_bucket": "fir-learning-dd25c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992669361485:android:731e8ac8eb0dc252eb4304",
+        "android_client_info": {
+          "package_name": "com.example.firebase_tutorial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "992669361485-fbhn1c56flh0tlbnid0qlsdm1s9ijss7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAakj-bmhGutrsKHhwDoG-qv4bfDV1I5AE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "992669361485-fbhn1c56flh0tlbnid0qlsdm1s9ijss7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
