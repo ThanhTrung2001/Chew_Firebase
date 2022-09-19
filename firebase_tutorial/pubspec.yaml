@@ -42,6 +42,9 @@ dependencies:
   flutter_facebook_auth: '^3.5.0'
   uuid: ^3.0.6
   flutter_screenutil: ^5.5.3+2
+  flutter_webrtc: ^0.9.7
+  loading_animation_widget: ^1.2.0+3
+  custom_navigation_bar: ^0.8.2
   
 
 dev_dependencies:
@@ -102,6 +105,17 @@ flutter:
           weight: 500
         - asset: assets/fonts/fira_code/FiraCode-Bold.ttf
           weight: 600
+    - family: EBGaramond
+      fonts:
+        - asset: assets/fonts/eb_garamond/EBGaramond-Regular.ttf
+        - asset: assets/fonts/eb_garamond/EBGaramond-Medium.ttf
+          weight: 300
+        - asset: assets/fonts/eb_garamond/EBGaramond-SemiBold.ttf
+          weight: 400
+        - asset: assets/fonts/eb_garamond/EBGaramond-Bold.ttf
+          weight: 500  
+        - asset: assets/fonts/eb_garamond/EBGaramond-ExtraBold.ttf
+          weight: 600  
         
   
   # For details regarding fonts from package dependencies,

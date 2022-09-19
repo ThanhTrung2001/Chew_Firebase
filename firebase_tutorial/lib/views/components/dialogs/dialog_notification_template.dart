@@ -38,7 +38,7 @@ class _DialogNotificationTemplateState extends ConsumerState<DialogNotificationT
         decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: Colors.black, width: 2.h),
-            borderRadius: const BorderRadius.all(Radius.circular(15.0))),
+            borderRadius: BorderRadius.all(Radius.circular(15.0.r))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -47,7 +47,7 @@ class _DialogNotificationTemplateState extends ConsumerState<DialogNotificationT
               height: 20.h,
               decoration: BoxDecoration(
                 color: widget.color,
-                borderRadius: const BorderRadius.only(topLeft: Radius.circular(12.0), topRight: Radius.circular(12.0),),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(12.0.r), topRight: Radius.circular(12.0.r),),
               ),
             ),
             Container(

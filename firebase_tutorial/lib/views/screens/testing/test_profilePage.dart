@@ -1,3 +1,5 @@
+import 'package:firebase_tutorial/models/user_model.dart';
+import 'package:firebase_tutorial/services/user/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +15,7 @@ class _TestProfilePageState extends ConsumerState<TestProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    UserFunction userFunction = new UserFunction();
     Size size = MediaQuery.of(context).size;
     return SafeArea(
         child: Scaffold(
@@ -40,7 +43,19 @@ class _TestProfilePageState extends ConsumerState<TestProfilePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                
+                Container(
+                  height: size.height*0.5,
+                  width: size.width,
+                  child: StreamBuilder<List<UserModel>>(
+                    stream: userFunction.readListAllUser(),
+                    builder: ((context, snapshot) {
+                      final user = snapshot.data;
+                      return ListView(
+                        children: user!.map(buildUser).toList(),
+                      );
+                    })),
+
+                ),
               ],
             ),
           ),
@@ -48,4 +63,8 @@ class _TestProfilePageState extends ConsumerState<TestProfilePage> {
       ),
     ));
   }
+  
+Widget buildUser(UserModel user) {
+  return Text('${user.userName}');
+}
 }

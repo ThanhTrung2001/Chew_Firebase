@@ -1,4 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_tutorial/config/export.dart';
+import 'package:firebase_tutorial/services/user/user_service.dart';
+import 'package:firebase_tutorial/views/components/buttons/button_login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -8,15 +13,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final nameController = TextEditingController();
+  UserFunction userFunction = UserFunction();
   @override
   Widget build(BuildContext context) {
+    
      Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: const Text('Chew', style: TextStyle(color: Colors.black),),
+          title: Text('Chew', style: AppTextStyle.appbarTitle,),
           centerTitle: true,
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -26,13 +32,15 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(onPressed: (){
-                Navigator.of(context).pushNamed('/login');
-              }, child: Text('Firebase Login', style: TextStyle(color: Colors.black),)),
-              SizedBox(height: 20*size.height/896,),
-              ElevatedButton(onPressed: (){
-                Navigator.of(context).pushNamed('/');
-              }, child: Text('Firebase profile', style: TextStyle(color: Colors.black),)),
+              Image.asset('assets/images/Logo.png', scale: 2.5,),
+              SizedBox(height: 23.h,),
+              Text('Welcome, User.........', style: AppTextStyle.appbarTitle,),
+              SizedBox(height: 47.h,),
+              LoginFuncButton(title: 'JOIN Live', color: AppColor.blueButton, onPressed: (){}),
+              SizedBox(height: 14.h,),
+              LoginFuncButton(title: 'CREATE Live', color: AppColor.greenButton, onPressed: (){}),
+              SizedBox(height: 14.h,),
+              LoginFuncButton(title: 'PUBLIC Live', color: AppColor.redButton, onPressed: (){}),
             ],
           ),
         ),

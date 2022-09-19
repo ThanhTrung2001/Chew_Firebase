@@ -1,3 +1,4 @@
+import 'package:firebase_tutorial/config/app_textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,10 +20,10 @@ class LoginFuncButton extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: color,
-          border: Border.all(width: 1.h, color: const Color.fromARGB(255, 128, 128, 128)),
+          border: Border.all(width: 2.h, color: Colors.black),
           borderRadius: BorderRadius.circular(15.0.w),
         ),
-        child: Text(title, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.sp, color: Colors.white),),
+        child: Text(title, style: AppTextStyle.buttonText,),
       ),
     );
   }

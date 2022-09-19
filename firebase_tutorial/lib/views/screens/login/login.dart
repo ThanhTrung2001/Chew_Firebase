@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_tutorial/models/user_model.dart';
+import 'package:firebase_tutorial/services/user/user_service.dart';
 import 'package:firebase_tutorial/views/components/buttons/button_login.dart';
 import 'package:firebase_tutorial/views/components/dialogs/dialog_notification_template.dart';
 import 'package:firebase_tutorial/views/components/dialogs/dialog_notification/dialog_success.dart';
@@ -20,42 +22,11 @@ class LoginScreen extends ConsumerStatefulWidget {
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final emailController = TextEditingController();
   final passController = TextEditingController();
-  final googleSignIn = GoogleSignIn();
-  FirebaseAuth auth = FirebaseAuth.instance;
-  GoogleSignInAccount? user;
-
-  Future<UserCredential> signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    if (googleUser == null) {
-      print('failed');
-    }
-    ;
-    user = googleUser;
-    CollectionReference users = FirebaseFirestore.instance.collection('user');
-    users.add({'email': user!.email, 'name': user!.displayName});
-    //Obtaiin auth
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    //creat new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    //return the UserCredential when Signed In
-
-    return await FirebaseAuth.instance.signInWithCredential(credential);
-  }
-
-  Future logOutGoogle() async {
-    FirebaseAuth.instance.signOut();
-    await googleSignIn.disconnect();
-  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    UserFunction userFunction = new UserFunction();
     return SafeArea(
         child: Scaffold(
       resizeToAvoidBottomInset: false,
@@ -95,7 +66,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                LoginInputTextField(controller: passController, hint: 'Password'),
+                LoginInputTextField(
+                    controller: passController, hint: 'Password'),
                 SizedBox(
                   height: 11.h,
                 ),
@@ -105,10 +77,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     Padding(
                       padding: EdgeInsets.only(right: 37.w),
                       child: GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Navigator.of(context).pushNamed('/forgot');
                         },
-                        child: const Text('Forgot?', style: TextStyle(color: Color(0xFF006BE9), fontSize: 14, fontWeight: FontWeight.w500),),
+                        child: const Text(
+                          'Forgot?',
+                          style: TextStyle(
+                              color: Color(0xFF006BE9),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500),
+                        ),
                       ),
                     ),
                   ],
@@ -116,26 +94,67 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 SizedBox(
                   height: 32.h,
                 ),
-                LoginFuncButton(title: 'Login', color: const Color(0xFF567BC3), onPressed: (){}),
-                SizedBox(height: 8.h,),
-                Text('Or', style: TextStyle(fontSize: 14.sp, color: const Color(0xFF818181)),),
-                SizedBox(height: 8.h,),
-                LoginFuncButton(title: 'Signup', color: const Color(0xFFB22759), onPressed: (){
-                  Navigator.of(context).pushNamed('/signup');
-                }),
-                SizedBox(height: 70.h,),
-                Text('Login with:', style: TextStyle(fontSize: 14.sp, color: const Color(0xFF818181)),),
-                SizedBox(height: 10.h,),
+                LoginFuncButton(
+                    title: 'Login',
+                    color: const Color(0xFF567BC3),
+                    onPressed: () {
+                  
+                      
+                    }),
+                SizedBox(
+                  height: 8.h,
+                ),
+                Text(
+                  'Or',
+                  style: TextStyle(
+                      fontSize: 14.sp, color: const Color(0xFF818181)),
+                ),
+                SizedBox(
+                  height: 8.h,
+                ),
+                LoginFuncButton(
+                    title: 'Signup',
+                    color: const Color(0xFFB22759),
+                    onPressed: () {
+                      
+    
+                      // Navigator.of(context).pushNamed('/signup');
+                    }),
+                SizedBox(
+                  height: 70.h,
+                ),
+                Text(
+                  'Login with:',
+                  style: TextStyle(
+                      fontSize: 14.sp, color: const Color(0xFF818181)),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ThirdPartyLoginButton(imgLink: 'assets/images/Facebook.png', onPressed: (){
-                      showDialog(context: context, builder: (context) => DialogSuccessNotification(title: 'Successful!', content: 'Direct to homepage.'));
-                    },),
+                    ThirdPartyLoginButton(
+                      imgLink: 'assets/images/Facebook.png',
+                      onPressed: () {
+                        
+                        // showDialog(
+                        //     context: context,
+                        //     builder: (context) => DialogSuccessNotification(
+                        //         title: 'Successful!',
+                        //         content: 'Direct to homepage.'));
+                      },
+                    ),
                     SizedBox(width: 21.w),
-                    ThirdPartyLoginButton(imgLink: 'assets/images/Google.png', onPressed: (){
-                      logOutGoogle();
-                    },),
+                    ThirdPartyLoginButton(
+                      imgLink: 'assets/images/Google.png',
+                      onPressed: () {
+                       
+                        // signInWithGoogle();
+                        // print(user?.displayName);
+              
+                      },
+                    ),
                   ],
                 ),
                 const Spacer(),
@@ -145,21 +164,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     Divider(
                       thickness: 1.5.h,
                     ),
-                    SizedBox(height: 20.h,),
-                    Text('Copyright@ 2022 by Guineaa', style: TextStyle(fontSize: 18.sp, color: const Color(0xFFA4A4A4)),),
-                    SizedBox(height: 18.h,)
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'Copyright@ 2022 by Guineaa',
+                      style: TextStyle(
+                          fontSize: 18.sp, color: const Color(0xFFA4A4A4)),
+                    ),
+                    SizedBox(
+                      height: 18.h,
+                    )
                   ],
                 )
                 // Expanded(
                 //   child: Column(
 
                 //   )),
-                
-                
-                
-                
-                
-                
+
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.spaceAround,
                 //   children: [
@@ -242,5 +264,3 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     ));
   }
 }
-
-
