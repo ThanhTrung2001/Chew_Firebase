@@ -7,8 +7,8 @@ import 'package:firebase_tutorial/views/screens/login/login.dart';
 import 'package:firebase_tutorial/views/screens/login/signup.dart';
 import 'package:firebase_tutorial/views/screens/login/verify.dart';
 import 'package:firebase_tutorial/views/screens/login/waiting.dart';
+import 'package:firebase_tutorial/views/screens/profile/profile.dart';
 import 'package:firebase_tutorial/views/screens/splash/splash.dart';
-import 'package:firebase_tutorial/views/screens/testing/test_profilePage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,9 +40,9 @@ class MyApp extends StatelessWidget {
               theme:
                   ThemeData(primarySwatch: Colors.blue, fontFamily: 'FiraCode'),
               // home: const SplashScreen(),
-              initialRoute:'/',
-              //   FirebaseAuth.instance.currentUser == null?
-              //  '/login' : '/',
+              initialRoute:
+                FirebaseAuth.instance.currentUser == null?
+               '/login' : '/',
               routes: {
                 '/splash': (context) => const SplashScreen(),
                 '/login': (context) => const LoginScreen(),
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
                 '/waiting' :(context) => const WaitingScreen(),
                 '/' : (context) => const MainScreen(),
                 '/home': (context) => const HomeScreen(),
-                '/test' :(context) => const TestProfilePage(),
+                '/profile' : (context) => const ProfileScreen(),
               });
         });
   }

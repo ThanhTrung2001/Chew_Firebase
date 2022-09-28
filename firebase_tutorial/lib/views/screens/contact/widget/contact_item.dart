@@ -8,7 +8,9 @@ class ContactItem extends ConsumerStatefulWidget {
   String avtLink;
   String name;
   String status;
-  ContactItem({Key? key, required this.name, required this.status, required this.avtLink}) : super(key: key);
+  VoidCallback onPressedAvatar;
+  VoidCallback onPressedMessage;
+  ContactItem({Key? key, required this.name, required this.status, required this.avtLink, required this.onPressedAvatar, required this.onPressedMessage}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ContactItemState();
@@ -20,10 +22,13 @@ class _ContactItemState extends ConsumerState<ContactItem> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CircleAvatar(
-          radius: 40.w,
-          backgroundColor: AppColor.blackBorder,
-          backgroundImage: NetworkImage('https://i.imgur.com/AOZhwOx.png',),
+        GestureDetector(
+          onTap: widget.onPressedAvatar,
+          child: CircleAvatar(
+            radius: 40.w,
+            backgroundColor: AppColor.blackBorder,
+            backgroundImage: NetworkImage('https://i.imgur.com/AOZhwOx.png',),
+          ),
         ),
         SizedBox(width: 17.w,),
         Column(
@@ -36,7 +41,9 @@ class _ContactItemState extends ConsumerState<ContactItem> {
           ],
         ),
         Spacer(),
-        AppIcon.chatActive,
+        GestureDetector(
+          onTap: widget.onPressedMessage,
+          child: AppIcon.chatActive),
       ],
     );
   }

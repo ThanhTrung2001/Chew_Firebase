@@ -9,14 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProfileScreen extends ConsumerStatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+// ignore: must_be_immutable
+class ContactProfileScreen extends ConsumerStatefulWidget {
+  String uid;
+  ContactProfileScreen({Key? key,required this.uid}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ProfileScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ContactProfileScreenState();
 }
 
-class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+class _ContactProfileScreenState extends ConsumerState<ContactProfileScreen> {
   UserFunction userFunction = UserFunction();
  CollectionReference users = FirebaseFirestore.instance.collection('user');
   @override
@@ -28,12 +30,20 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           title: Text(
-            'Profile',
+            'Contacter',
             style: AppTextStyle.appbarTitle,
           ),
           centerTitle: true,
           backgroundColor: Colors.transparent,
-          elevation: 0,
+          elevation: 0,  
+           leading: Padding(
+              padding: EdgeInsets.only(top: 17.h, left: 10.w),
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: AppIcon.back),
+            ),
           actions: [
             GestureDetector(
               onTap: () {},
@@ -43,7 +53,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         ),
         body: Center(
           child: StreamBuilder(
-            stream: users.doc(FirebaseAuth.instance.currentUser!.uid).snapshots(includeMetadataChanges: true),
+            stream: users.doc(widget.uid).snapshots(includeMetadataChanges: true),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if(snapshot.hasData)
               {

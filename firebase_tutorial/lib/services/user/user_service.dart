@@ -10,15 +10,8 @@ class UserFunction {
   final docUser = FirebaseFirestore.instance.collection('user');
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  Future getCurrentUser() async {
-    final user = auth.currentUser;
-    // ignore: avoid_print
-    print(user!.uid);
-  }
-
-  Future getUserInfoByID(String userID) async
-  {
-    final user = docUser.doc(userID).get().then((DocumentSnapshot document) {
+  Future getUserInfoByID(String userID) async {
+    return docUser.doc(userID).get().then((DocumentSnapshot document) {
       currentUser.uid = document.get('id');
       // ignore: avoid_print
       print(document.data());
@@ -27,22 +20,19 @@ class UserFunction {
 
   bool findUser() {
     // ignore: unnecessary_null_comparison
-    if(docUser.doc(auth.currentUser!.uid).get() != null)
-    {
+    if (docUser.doc(auth.currentUser!.uid).get() != null) {
       return true;
-    }
-    else
-    {
+    } else {
       return false;
     }
   }
 
-
-  Future createNewUser(userName, email, passWord, avtLink) async {
-    final user =
-        UserModel(auth.currentUser!.uid, userName, email, avtLink);
+  Future createNewUser(uid, userName, email, avtLink, status, bool inLive,
+      description, List<String> followingID, List<String> followerID) async {
+    final user = UserModel(uid, userName, email, avtLink, status, inLive,
+        description, followingID, followerID);
     final json = user.toJson();
-    await docUser.doc(auth.currentUser!.uid).set(json);
+    await docUser.doc(uid).set(json);
   }
 
   Stream<List<UserModel>> readListAllUser() {
@@ -51,18 +41,34 @@ class UserFunction {
             snapshot.docs.map((e) => UserModel.fromJson(e.data())).toList()));
   }
 
+  getUserList() {
+    return FirebaseFirestore.instance
+        .collection('user')
+        .snapshots(includeMetadataChanges: true);
+    // return userCollection;
+  }
+
+  searchuserByName(String search) {
+    return FirebaseFirestore.instance
+        .collection('user')
+        .where('name', isEqualTo: search)
+        .snapshots(includeMetadataChanges: true);
+    // return userCollection;
+  }
+
   Future getUser(String userID) async {
     // ignore: unused_local_variable
     final user = docUser.doc(userID).get().then((DocumentSnapshot document) {
       currentUser.uid = document.get('id');
-      // ignore: avoid_print
-      print(document.data());
+      return document;
     });
   }
 
   Future<void> updateUser(String userID, UserModel user) async {
-    docUser
-        .doc(userID)
-        .update({'name': user.userName}); 
+    docUser.doc(userID).update({'name': user.userName});
+  }
+
+  String? getUID() {
+    return auth.currentUser?.uid;
   }
 }

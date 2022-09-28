@@ -3,21 +3,22 @@ import 'package:firebase_tutorial/config/export.dart';
 import 'package:firebase_tutorial/services/user/user_service.dart';
 import 'package:firebase_tutorial/views/components/buttons/button_login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  UserFunction userFunction = UserFunction();
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+
   @override
   Widget build(BuildContext context) {
-    
-     Size size = MediaQuery.of(context).size;
+    UserFunction userFunction = UserFunction();
+    Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,

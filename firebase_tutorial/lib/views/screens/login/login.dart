@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_tutorial/models/user_model.dart';
+import 'package:firebase_tutorial/services/auth/authenticate_service.dart';
 import 'package:firebase_tutorial/services/user/user_service.dart';
 import 'package:firebase_tutorial/views/components/buttons/button_login.dart';
 import 'package:firebase_tutorial/views/components/dialogs/dialog_notification_template.dart';
@@ -22,11 +23,13 @@ class LoginScreen extends ConsumerStatefulWidget {
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final emailController = TextEditingController();
   final passController = TextEditingController();
-
+  FirebaseAuth auth = FirebaseAuth.instance;
+  
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    UserFunction userFunction = new UserFunction();
+    UserFunction userFunction = UserFunction();
+    final authService = AuthenticationService();
     return SafeArea(
         child: Scaffold(
       resizeToAvoidBottomInset: false,
@@ -78,7 +81,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       padding: EdgeInsets.only(right: 37.w),
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pushNamed('/forgot');
+                          AuthenticationService().logOut();
+                          // Navigator.of(context).pushNamed('/forgot');
                         },
                         child: const Text(
                           'Forgot?',
@@ -98,8 +102,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     title: 'Login',
                     color: const Color(0xFF567BC3),
                     onPressed: () {
-                  
-                      
+                      authService.emailSignIn(emailController.text, passController.text);
+                     Navigator.of(context).pushNamed('/');
                     }),
                 SizedBox(
                   height: 8.h,
@@ -116,9 +120,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     title: 'Signup',
                     color: const Color(0xFFB22759),
                     onPressed: () {
-                      
-    
-                      // Navigator.of(context).pushNamed('/signup');
+                      Navigator.of(context).pushNamed('/signup');
                     }),
                 SizedBox(
                   height: 70.h,
