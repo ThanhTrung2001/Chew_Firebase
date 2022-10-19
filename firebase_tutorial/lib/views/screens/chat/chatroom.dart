@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_tutorial/config/export.dart';
 import 'package:firebase_tutorial/services/chat/chat_service.dart';
 import 'package:firebase_tutorial/services/chat/message_service.dart';
+import 'package:firebase_tutorial/services/images/image_service.dart';
 import 'package:firebase_tutorial/views/screens/chat/widget/message_bar.dart';
+import 'package:firebase_tutorial/views/screens/photo/photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,6 +23,7 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
   TextEditingController messageController = TextEditingController();
   final chatRoomFunction = ChatRoomFuction();
   final messageFunction = MessageFunction();
+  final imageFunction = ImageFunction();
   bool isImage = false;
   bool isYour = false;
   late Stream<QuerySnapshot> listMessage;
@@ -54,7 +58,9 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
             ),
             actions: [
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  imageFunction.listFiles();
+                },
                 child: AppIcon.gift,
               ),
             ],
@@ -78,7 +84,30 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
                                   child: buildConversation())),
                           MessageBar(
                               controller: messageController,
-                              pressImage: () {},
+                              pressImage: () async {
+                                final result = await FilePicker.platform.pickFiles(
+                                  allowMultiple: false,
+                                  type: FileType.custom,
+                                  allowedExtensions: ['png', 'jpg'],
+                                );
+                                if(result != null)
+                                {
+                                  final path = result.files.single.path!;
+                                  final name = result.files.single.name;
+                                  await imageFunction.uploadFile(path, name);
+                                  final url = await imageFunction.downloadURL(name);
+                                  print(path + '----' + name);
+                                  if(url != null)
+                                  {
+                                    messageFunction.sendImageMessage(widget.chatRoomID, FirebaseAuth.instance.currentUser!.uid,url );  
+                                  }
+                                  else
+                                  {
+                                    print("error");
+                                  }
+                                  }
+                                
+                              },
                               sendMessage: () {
                                 messageFunction.sendTextMessage(widget.chatRoomID, FirebaseAuth.instance.currentUser!.uid, messageController.text);
                               }),
@@ -152,7 +181,15 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
                                 ? AppColor.secondaryTextColor
                                 : AppColor.primaryTextColor),
                       )
-                    : Image.network(content)),
+                    : GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              PhotoScreen(url: content)));
+                      },
+                      child: Image.network(content))),
           ],
         ),
       ],

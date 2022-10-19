@@ -8,7 +8,9 @@ class UserModel {
   String? description;
   List<String>? followingID;
   List<String>? followerID;
+
   UserModel(this.uid, this.userName, this.email, this.avtLink, this.status, this.inLive, this.description, this.followingID, this.followerID);
+  
   UserModel.fromJson(Map<String, dynamic> json){
   uid = json['uid'];
   userName = json['name'];

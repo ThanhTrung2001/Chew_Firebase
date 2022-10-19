@@ -45,7 +45,9 @@ dependencies:
   flutter_webrtc: ^0.9.7
   loading_animation_widget: ^1.2.0+3
   custom_navigation_bar: ^0.8.2
-  
+  firebase_storage: ^10.3.11
+  file_picker: ^5.2.1
+  photo_view: ^0.14.0
 
 dev_dependencies:
   flutter_test:
