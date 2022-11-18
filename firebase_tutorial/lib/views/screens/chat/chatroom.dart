@@ -108,8 +108,8 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
                                   }
                                 
                               },
-                              sendMessage: () {
-                                messageFunction.sendTextMessage(widget.chatRoomID, FirebaseAuth.instance.currentUser!.uid, messageController.text);
+                              sendMessage: () async{
+                                await messageFunction.sendTextMessage(widget.chatRoomID, FirebaseAuth.instance.currentUser!.uid, messageController.text);
                               }),
                         ],
                       ),

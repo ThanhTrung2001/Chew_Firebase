@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_tutorial/config/export.dart';
 import 'package:firebase_tutorial/services/user/user_service.dart';
 import 'package:firebase_tutorial/views/components/buttons/button_login.dart';
+import 'package:firebase_tutorial/views/screens/livestream/join_live.dart';
+import 'package:firebase_tutorial/views/screens/livestream/live.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,11 +39,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               SizedBox(height: 23.h,),
               Text('Welcome, User.........', style: AppTextStyle.appbarTitle,),
               SizedBox(height: 47.h,),
-              LoginFuncButton(title: 'JOIN Live', color: AppColor.blueButton, onPressed: (){}),
+              LoginFuncButton(title: 'JOIN Live', color: AppColor.blueButton, onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> const JoinLiveScreen()));
+              }),
               SizedBox(height: 14.h,),
-              LoginFuncButton(title: 'CREATE Live', color: AppColor.greenButton, onPressed: (){}),
+              LoginFuncButton(title: 'CREATE Live', color: AppColor.greenButton, onPressed: (){
+                print(FirebaseAuth.instance.currentUser!.displayName);
+              }),
               SizedBox(height: 14.h,),
-              LoginFuncButton(title: 'PUBLIC Live', color: AppColor.redButton, onPressed: (){}),
+              LoginFuncButton(title: 'PUBLIC Live', color: AppColor.redButton, onPressed: (){
+                Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LiveListScreen()));
+              }),
             ],
           ),
         ),

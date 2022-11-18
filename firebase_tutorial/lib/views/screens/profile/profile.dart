@@ -5,6 +5,7 @@ import 'package:firebase_tutorial/models/user_model.dart';
 import 'package:firebase_tutorial/services/auth/authenticate_service.dart';
 import 'package:firebase_tutorial/services/user/user_service.dart';
 import 'package:firebase_tutorial/views/components/buttons/button_login.dart';
+import 'package:firebase_tutorial/views/screens/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,6 +19,7 @@ class ProfileScreen extends ConsumerStatefulWidget {
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   UserFunction userFunction = UserFunction();
+  AuthenticationService authenticationService = AuthenticationService();
  CollectionReference users = FirebaseFirestore.instance.collection('user');
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           elevation: 0,
           actions: [
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                authenticationService.logOut();
+                Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginScreen()));
+              },
               child: AppIcon.userSetting,
             ),
           ],

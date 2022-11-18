@@ -26,18 +26,18 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   void search() {
     if (searchController.text == "") {
       setState(() {
-        chatRoomStream = chatRoomFunction.getChatRoomList('guineaaa');
+        chatRoomStream = chatRoomFunction.getChatRoomList(FirebaseAuth.instance.currentUser?.displayName);
       });
     } else {
       setState(() {
-        chatRoomStream = chatRoomFunction.getChatRoomList('guineaaa');
+        chatRoomStream = chatRoomFunction.getChatRoomList(FirebaseAuth.instance.currentUser?.displayName);
       });
     }
   }
 
   @override
   void initState() {
-    chatRoomStream = chatRoomFunction.getChatRoomList('guineaaa');
+    chatRoomStream = chatRoomFunction.getChatRoomList(FirebaseAuth.instance.currentUser?.displayName);
     super.initState();
   }
 

@@ -4,6 +4,7 @@ import 'package:firebase_tutorial/services/auth/authenticate_service.dart';
 import 'package:firebase_tutorial/services/user/user_service.dart';
 import 'package:firebase_tutorial/views/components/buttons/button_login.dart';
 import 'package:firebase_tutorial/views/components/textfields/textfield_login.dart';
+import 'package:firebase_tutorial/views/screens/home/home.dart';
 import 'package:firebase_tutorial/views/screens/login/widgets/thirdparty_login_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -129,7 +130,9 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     title: 'Signup',
                     color: const Color(0xFFB22759),
                     onPressed: (){
+                      
                       authService.emailSignUp(emailController.text,passController.text, usernameController.text);
+                      Navigator.of(context).pushNamed('/');
                     }),
                 SizedBox(
                   height: 8.h,

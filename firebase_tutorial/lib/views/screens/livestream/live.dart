@@ -1,6 +1,7 @@
 import 'package:firebase_tutorial/config/export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/src/rendering/box.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LiveListScreen extends ConsumerStatefulWidget {
@@ -17,10 +18,10 @@ class _LiveListScreenState extends ConsumerState<LiveListScreen> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-          extendBodyBehindAppBar: true,
+          extendBodyBehindAppBar: false,
           appBar: AppBar(
             title: Text(
-              'ChatRoom',
+              'Public Live',
               style: AppTextStyle.appbarTitle,
             ),
             centerTitle: true,
@@ -45,10 +46,8 @@ class _LiveListScreenState extends ConsumerState<LiveListScreen> {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 21.w),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 84.h,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -61,16 +60,16 @@ class _LiveListScreenState extends ConsumerState<LiveListScreen> {
                 Text('Result'),
                 SizedBox(height: 8.h,),
                 Divider(thickness: 3, endIndent: 20,),
-                GridView.builder(
-                  itemCount: 10,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    mainAxisSpacing: 10,
-                                    crossAxisSpacing: 5,
-                                    childAspectRatio: 1), 
-                  itemBuilder: (context, index){
-                    return Container();
-                  })
+                // GridView.builder(
+                //   itemCount: 10,
+                //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                //                     crossAxisCount: 2,
+                //                     mainAxisSpacing: 10,
+                //                     crossAxisSpacing: 5,
+                //                     childAspectRatio: 1), 
+                //   itemBuilder: (context, index){
+                //     return Container( height: 10, width: 10, color: Colors.black,);
+                //   })
 
               ],
             ),

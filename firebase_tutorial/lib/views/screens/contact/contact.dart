@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_tutorial/config/export.dart';
+import 'package:firebase_tutorial/main.dart';
+import 'package:firebase_tutorial/models/chatroom_model.dart';
 import 'package:firebase_tutorial/models/user_model.dart';
 import 'package:firebase_tutorial/services/auth/authenticate_service.dart';
+import 'package:firebase_tutorial/services/chat/chat_service.dart';
 import 'package:firebase_tutorial/services/user/user_service.dart';
 import 'package:firebase_tutorial/views/components/search/search_component.dart';
 import 'package:firebase_tutorial/views/screens/contact/contact_profile.dart';
@@ -10,6 +13,8 @@ import 'package:firebase_tutorial/views/screens/contact/widget/contact_item.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../chat/chatroom.dart';
 
 class ContactScreen extends ConsumerStatefulWidget {
   const ContactScreen({Key? key}) : super(key: key);
@@ -21,6 +26,7 @@ class ContactScreen extends ConsumerStatefulWidget {
 class _ContactScreenState extends ConsumerState<ContactScreen> {
   final searchController = TextEditingController();
   final userFunction = UserFunction();
+  final chatRoomFunction = ChatRoomFuction();
   final users = FirebaseFirestore.instance;
   late Stream<QuerySnapshot> userStream;
 
@@ -154,7 +160,16 @@ class _ContactScreenState extends ConsumerState<ContactScreen> {
                   )),
         );
       },
-      onPressedMessage: () {},
+      onPressedMessage: () async{
+        final userName = await FirebaseAuth.instance.currentUser?.displayName;
+        final chatRoomModel = ChatRoomModel('', name, '', '', FirebaseAuth.instance.currentUser!.uid, [], avtLink);
+        final i = await chatRoomFunction.createChatRoom(chatRoomModel, name, userName!);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ChatRoomScreen(chatRoomID: i!)),
+        );
+      },
     );
   }
 }
