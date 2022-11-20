@@ -65,7 +65,8 @@ class _JoinLiveScreenState extends ConsumerState<JoinLiveScreen> {
       token: token,
       channelId: channel,
       options: options,
-      uid: 1,
+      uid: userID,
+      
     );
   }
 

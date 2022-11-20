@@ -8,15 +8,15 @@ class AppIcon{
 
   static final heart = Image.asset('${assetIconUrl}/Heart.png', scale: 3.h,);
 
-  static final gift = Image.asset('${assetIconUrl}/Gift.png', scale: 3.h,);
+  static final gift = Image.asset('${assetIconUrl}/Gift.png', scale: 5.h,);
 
   static final userSetting = Image.asset('${assetIconUrl}/User Settings.png', scale: 5.h,);
   
   static final report = Image.asset('${assetIconUrl}/Error.png', scale: 3.h,);
   
-  static final micCall = Image.asset('${assetIconUrl}/Call.png', scale: (100/35*3).h,);
+  static final micCall = Image.asset('${assetIconUrl}/Call.png', scale: 5,);
 
-  static final videoCall = Image.asset('${assetIconUrl}/Video Call.png', scale: (100/35*3).h,);
+  static final videoCall = Image.asset('${assetIconUrl}/Video Call.png', scale: 5,);
 
   static final info = Image.asset('${assetIconUrl}/Info.png', scale: (100/35*3).h,);
 

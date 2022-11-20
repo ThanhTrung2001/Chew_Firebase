@@ -1,10 +1,13 @@
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_tutorial/config/export.dart';
+import 'package:firebase_tutorial/services/call/calling_service.dart';
 import 'package:firebase_tutorial/services/chat/chat_service.dart';
 import 'package:firebase_tutorial/services/chat/message_service.dart';
 import 'package:firebase_tutorial/services/images/image_service.dart';
+import 'package:firebase_tutorial/views/screens/chat/voice_call.dart';
 import 'package:firebase_tutorial/views/screens/chat/widget/message_bar.dart';
 import 'package:firebase_tutorial/views/screens/photo/photo.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +27,13 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
   final chatRoomFunction = ChatRoomFuction();
   final messageFunction = MessageFunction();
   final imageFunction = ImageFunction();
+  final voiceCallFunction = CallingFunction();
   bool isImage = false;
   bool isYour = false;
   late Stream<QuerySnapshot> listMessage;
+  late RtcEngine agoraEngine;
+
+  
 
   @override
   void initState() {
@@ -42,7 +49,7 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
           extendBodyBehindAppBar: true,
           appBar: AppBar(
             title: Text(
-              'ChatRoom',
+              'Room',
               style: AppTextStyle.appbarTitle,
             ),
             centerTitle: true,
@@ -58,11 +65,21 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
             ),
             actions: [
               GestureDetector(
-                onTap: () {
-                  imageFunction.listFiles();
+                onTap: (){
+                  voiceCallFunction.setInformation(widget.chatRoomID);
+                  // await voiceCallFunction.onJoin();
+                  Navigator.of(context).pushNamed('/voice');
                 },
-                child: AppIcon.gift,
+                child: AppIcon.micCall,
               ),
+              GestureDetector(
+                onTap: () {
+                  voiceCallFunction.setInformation(widget.chatRoomID);
+                  Navigator.of(context).pushNamed('/video');
+                },
+                child: AppIcon.videoCall,
+              ),
+
             ],
           ),
           body: Stack(

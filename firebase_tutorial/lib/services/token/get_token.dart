@@ -2,7 +2,7 @@ import 'package:firebase_tutorial/config/export.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class Tokengenerator{
+class TokenGenerator{
   Future<String> fetchToken(int uid, String channelName, int tokenRole) async {
     // Prepare the Url
     String url = '$serverUrl/rtc/$channelName/${tokenRole.toString()}/uid/${uid.toString()}?expiry=${tokenExpireTime.toString()}';
@@ -15,6 +15,7 @@ class Tokengenerator{
         Map<String, dynamic> json = jsonDecode(response.body);
         String newToken = json['rtcToken'];
         print('Token Received: $newToken');
+        token = newToken;
         // Use the token to join a channel or renew an expiring token
         return newToken;
     } else {
