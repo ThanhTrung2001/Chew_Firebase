@@ -27,13 +27,11 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
   final chatRoomFunction = ChatRoomFuction();
   final messageFunction = MessageFunction();
   final imageFunction = ImageFunction();
-  final voiceCallFunction = CallingFunction();
+  final callingFunction = CallingFunction();
   bool isImage = false;
   bool isYour = false;
   late Stream<QuerySnapshot> listMessage;
   late RtcEngine agoraEngine;
-
-  
 
   @override
   void initState() {
@@ -65,21 +63,22 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
             ),
             actions: [
               GestureDetector(
-                onTap: (){
-                  voiceCallFunction.setInformation(widget.chatRoomID);
-                  // await voiceCallFunction.onJoin();
+                onTap: () {
+                  callingFunction.setInformation(widget.chatRoomID);
+                  // await callingFunction.onJoin();
                   Navigator.of(context).pushNamed('/voice');
                 },
                 child: AppIcon.micCall,
               ),
               GestureDetector(
                 onTap: () {
-                  voiceCallFunction.setInformation(widget.chatRoomID);
+                  callingFunction.setInformation(widget.chatRoomID);
                   Navigator.of(context).pushNamed('/video');
+                  // //use for test
+                  // Navigator.of(context).pushNamed('/video_test');
                 },
                 child: AppIcon.videoCall,
               ),
-
             ],
           ),
           body: Stack(
@@ -102,31 +101,34 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
                           MessageBar(
                               controller: messageController,
                               pressImage: () async {
-                                final result = await FilePicker.platform.pickFiles(
+                                final result =
+                                    await FilePicker.platform.pickFiles(
                                   allowMultiple: false,
                                   type: FileType.custom,
                                   allowedExtensions: ['png', 'jpg'],
                                 );
-                                if(result != null)
-                                {
+                                if (result != null) {
                                   final path = result.files.single.path!;
                                   final name = result.files.single.name;
                                   await imageFunction.uploadFile(path, name);
-                                  final url = await imageFunction.downloadURL(name);
+                                  final url =
+                                      await imageFunction.downloadURL(name);
                                   print(path + '----' + name);
-                                  if(url != null)
-                                  {
-                                    messageFunction.sendImageMessage(widget.chatRoomID, FirebaseAuth.instance.currentUser!.uid,url );  
-                                  }
-                                  else
-                                  {
+                                  if (url != null) {
+                                    messageFunction.sendImageMessage(
+                                        widget.chatRoomID,
+                                        FirebaseAuth.instance.currentUser!.uid,
+                                        url);
+                                  } else {
                                     print("error");
                                   }
-                                  }
-                                
+                                }
                               },
-                              sendMessage: () async{
-                                await messageFunction.sendTextMessage(widget.chatRoomID, FirebaseAuth.instance.currentUser!.uid, messageController.text);
+                              sendMessage: () async {
+                                await messageFunction.sendTextMessage(
+                                    widget.chatRoomID,
+                                    FirebaseAuth.instance.currentUser!.uid,
+                                    messageController.text);
                               }),
                         ],
                       ),
@@ -147,21 +149,19 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
       width: double.infinity,
       child: StreamBuilder(
           stream: listMessage,
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot){
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
                 itemCount: snapshot.data?.docs.length,
                 itemBuilder: (BuildContext context, int index) {
                   DocumentSnapshot ds = snapshot.data!.docs[index];
-                  return buildMessage(ds['isImage'], ds['senderUID'], ds['content']);
+                  return buildMessage(
+                      ds['isImage'], ds['senderUID'], ds['content']);
                 },
               );
-            }
-            else if(snapshot.hasError)
-            {
+            } else if (snapshot.hasError) {
               return Text('Error');
-            }
-            else{
+            } else {
               return Text('Loading');
             }
           }),
@@ -194,19 +194,20 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
                     ? Text(
                         content,
                         style: TextStyle(
-                            color: (uid != FirebaseAuth.instance.currentUser!.uid)
-                                ? AppColor.secondaryTextColor
-                                : AppColor.primaryTextColor),
+                            color:
+                                (uid != FirebaseAuth.instance.currentUser!.uid)
+                                    ? AppColor.secondaryTextColor
+                                    : AppColor.primaryTextColor),
                       )
                     : GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              PhotoScreen(url: content)));
-                      },
-                      child: Image.network(content))),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      PhotoScreen(url: content)));
+                        },
+                        child: Image.network(content))),
           ],
         ),
       ],
