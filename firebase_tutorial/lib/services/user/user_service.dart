@@ -68,6 +68,10 @@ class UserFunction {
     docUser.doc(userID).update({'name': user.userName});
   }
 
+  Future<void> updateImage(String userID, String image) async {
+    docUser.doc(userID).update({'avtLink': image});
+  }
+
   String? getUID() {
     return auth.currentUser?.uid;
   }
