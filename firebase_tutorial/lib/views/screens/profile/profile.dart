@@ -8,6 +8,7 @@ import 'package:firebase_tutorial/services/user/user_service.dart';
 import 'package:firebase_tutorial/views/components/buttons/button_login.dart';
 import 'package:firebase_tutorial/views/components/buttons/button_mini_login.dart';
 import 'package:firebase_tutorial/views/screens/login/login.dart';
+import 'package:firebase_tutorial/views/screens/profile/edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,11 +45,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           actions: [
             GestureDetector(
               onTap: () {
-                authenticationService.logOut();
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const LoginScreen()));
+                        builder: (context) => const EditProfileScreen()));
               },
               child: AppIcon.userSetting,
             ),
@@ -61,6 +61,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 .snapshots(includeMetadataChanges: true),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
+                avtLink = snapshot.data['avtLink'];
+                name = snapshot.data['name'];
+                email = snapshot.data['email'];
+                description = snapshot.data['description'] ?? "123";
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -118,9 +122,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     SizedBox(
                       height: 22.h,
                     ),
-                    Text(
-                      '${snapshot.data['name']}',
-                    ),
+                    Text('${snapshot.data['name']}',
+                        style: AppTextStyle.titleDialog),
                     SizedBox(
                       height: 31.h,
                     ),
@@ -167,9 +170,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     SizedBox(
                       height: 19.h,
                     ),
-                    Text(
-                      'Description',
-                    ),
+                    Text('Description', style: AppTextStyle.titleDialog),
                     SizedBox(
                       height: 20.h,
                     ),
@@ -185,7 +186,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('description'),
+                          Text('${description}'),
                         ],
                       ),
                     ),
@@ -197,6 +198,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         color: Colors.blue,
                         onPressed: () {
                           authenticationService.logOut();
+                          Navigator.of(context).pushNamed('/login');
                         }),
                   ],
                 );

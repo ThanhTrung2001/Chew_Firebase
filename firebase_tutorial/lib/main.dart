@@ -21,6 +21,7 @@ import 'package:flutter/services.dart';
 //call
 import 'package:permission_handler/permission_handler.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:toast/toast.dart';
 
 void main() async {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    ToastContext().init(context);
     // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     return ScreenUtilInit(
         designSize: const Size(414, 896),

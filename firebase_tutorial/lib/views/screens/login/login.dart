@@ -24,7 +24,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final emailController = TextEditingController();
   final passController = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
-  
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -81,8 +81,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       padding: EdgeInsets.only(right: 37.w),
                       child: GestureDetector(
                         onTap: () {
-                          AuthenticationService().logOut();
-                          // Navigator.of(context).pushNamed('/forgot');
+                          // AuthenticationService().logOut();
+                          Navigator.of(context).pushNamed('/forgot');
                         },
                         child: const Text(
                           'Forgot?',
@@ -102,8 +102,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     title: 'Login',
                     color: const Color(0xFF567BC3),
                     onPressed: () {
-                      authService.emailSignIn(emailController.text, passController.text);
-                     Navigator.of(context).pushNamed('/');
+                      authService.emailSignIn(
+                          emailController.text, passController.text);
+                      Navigator.of(context).pushNamed('/');
                     }),
                 SizedBox(
                   height: 8.h,
@@ -139,7 +140,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ThirdPartyLoginButton(
                       imgLink: 'assets/images/Facebook.png',
                       onPressed: () {
-                        
                         // showDialog(
                         //     context: context,
                         //     builder: (context) => DialogSuccessNotification(
@@ -151,10 +151,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ThirdPartyLoginButton(
                       imgLink: 'assets/images/Google.png',
                       onPressed: () {
-                       
                         // signInWithGoogle();
                         // print(user?.displayName);
-              
                       },
                     ),
                   ],

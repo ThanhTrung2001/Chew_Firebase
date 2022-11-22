@@ -55,7 +55,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 height: 47.h,
               ),
               LoginFuncButton(
-                  title: 'JOIN Live',
+                  title: 'JOIN ROOM',
                   color: AppColor.blueButton,
                   onPressed: () {
                     Navigator.push(
@@ -67,7 +67,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 height: 14.h,
               ),
               LoginFuncButton(
-                  title: 'CREATE Live',
+                  title: 'CREATE ROOM',
                   color: AppColor.greenButton,
                   onPressed: () {
                     // tokenGenerator.fetchToken(1, 'test', tokenRole);
@@ -76,7 +76,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 height: 14.h,
               ),
               LoginFuncButton(
-                  title: 'PUBLIC Live',
+                  title: 'PUBLIC ROOM',
                   color: AppColor.redButton,
                   onPressed: () {
                     [Permission.camera].request();

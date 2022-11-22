@@ -64,8 +64,9 @@ class UserFunction {
     });
   }
 
-  Future<void> updateUser(String userID, UserModel user) async {
-    docUser.doc(userID).update({'name': user.userName});
+  Future<void> updateUser(
+      String? userID, String name1, String description1) async {
+    docUser.doc(userID).update({'name': name1, 'description': description1});
   }
 
   Future<void> updateImage(String userID, String image) async {

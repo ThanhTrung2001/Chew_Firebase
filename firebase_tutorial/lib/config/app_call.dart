@@ -23,3 +23,10 @@ int tokenExpireTime = 86400; // Expire time in Seconds.
 //Is Token expiring for renew
 bool isTokenExpiring = false; // Set to true when the token is about to expire
 String androidIP = "10.0.222.90:8080";
+
+//userinfo
+String id = "";
+String name = "";
+String email = "";
+String avtLink = "";
+String description = "123";
