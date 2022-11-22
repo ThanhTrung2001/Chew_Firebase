@@ -18,9 +18,12 @@ class _VideoCallMainScreenState extends ConsumerState<VideoCallMainScreen> {
   late RtcEngine agoraEngine;
   int? _remoteUid; // uid of the remote user
   bool _isJoined = false; // Indicates if the local user has joined the channel
+  bool _isMuted = false;
+  bool _isAvoidCam = false;
+  bool _isFrontCam = true;
   @override
   void initState() {
-    //  setupVideoSDKEngine();
+    setupVideoSDKEngine();
     setState(() {
       _isJoined == true;
     });
@@ -91,15 +94,34 @@ class _VideoCallMainScreenState extends ConsumerState<VideoCallMainScreen> {
     agoraEngine.leaveChannel();
   }
 
+  void pressMute() {
+    setState(() {
+      _isMuted = !_isMuted;
+    });
+    agoraEngine.muteLocalAudioStream(_isMuted);
+  }
+
+  void pressCamera() {
+    setState(() {
+      _isAvoidCam = !_isAvoidCam;
+    });
+    agoraEngine.muteLocalVideoStream(_isAvoidCam);
+  }
+
+  void toggleCamera() {
+    setState(() {
+      _isFrontCam = !_isFrontCam;
+    });
+    agoraEngine.switchCamera();
+  }
+
   @override
   void dispose() async {
-    if (_isJoined == false) {
-      // await agoraEngine.leaveChannel();
-      setState(() {
-        _isJoined = false;
-        _remoteUid = null;
-      });
-    }
+    await agoraEngine.leaveChannel();
+    setState(() {
+      _isJoined = false;
+      _remoteUid = null;
+    });
     super.dispose();
   }
 
@@ -110,52 +132,140 @@ class _VideoCallMainScreenState extends ConsumerState<VideoCallMainScreen> {
       appBar: AppBar(
         title: const Text('Agora Video Calling'),
         centerTitle: true,
+        backgroundColor: Colors.black,
       ),
-      body: Stack(
-        alignment: Alignment.topCenter,
-        children: [
-          Positioned(
-              top: 10,
-              child: Container(
-                width: size.width * 0.8,
-                height: size.height * 0.6,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  border: Border.all(color: Colors.black, width: 2),
-                ),
-                child: _remoteVideo(),
-              )),
-          Positioned(
-              top: size.height * 0.6 - 140,
-              right: size.width * 0.1,
-              child: Container(
-                width: 120,
-                height: 150,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.cyan,
-                  border: Border.all(color: Colors.black, width: 2),
-                ),
-                child: _localPreview(),
-              )),
-          Positioned(
-              top: size.height * 0.7,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: _isJoined == true ? null : () => {join()},
-                    child: const Text("Join"),
+      body: Container(
+        color: Colors.black,
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            //Remote View
+            Positioned(
+                top: 0,
+                child: Container(
+                  width: size.width,
+                  height: size.height * 0.7,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.black, width: 2),
                   ),
-                  const SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: _isJoined == true ? () => {leave()} : null,
-                    child: const Text("Leave"),
+                  child: _remoteVideo(),
+                )),
+            //UserView
+            Positioned(
+                top: size.height * 0.7 - 150,
+                right: 0,
+                child: Container(
+                  width: 120,
+                  height: 150,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.cyan,
+                    border: Border.all(color: Colors.black, width: 2),
                   ),
-                ],
-              ))
-        ],
+                  child: _localPreview(),
+                )),
+            //Button Mic
+            Positioned(
+                top: size.height * 0.72,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    //Button Mic
+                    ElevatedButton(
+                      onPressed: () {
+                        pressMute();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(7.0),
+                      ),
+                      child: Icon(
+                        Icons.mic,
+                        color: (_isMuted == false) ? Colors.blue : Colors.grey,
+                        size: 25.0,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    //Button Camera
+                    ElevatedButton(
+                      onPressed: () {
+                        pressCamera();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(7.0),
+                      ),
+                      child: Icon(
+                        Icons.camera_alt_rounded,
+                        color:
+                            (_isAvoidCam == false) ? Colors.blue : Colors.grey,
+                        size: 25.0,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    //Button Switch Camera
+                    ElevatedButton(
+                      onPressed: () {
+                        toggleCamera();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(7.0),
+                      ),
+                      child: Icon(
+                        Icons.swap_calls,
+                        color:
+                            (_isFrontCam == false) ? Colors.blue : Colors.red,
+                        size: 25.0,
+                      ),
+                    ),
+                  ],
+                )),
+            //Join & Leave Channel button
+            Positioned(
+              top: size.height * 0.785,
+              child: (_isJoined == false)
+                  ? ElevatedButton(
+                      onPressed: () {
+                        join();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromARGB(255, 63, 133, 66),
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(10.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: const Text("Start"),
+                      ),
+                    )
+                  : ElevatedButton(
+                      onPressed: () {
+                        leave();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(10.0),
+                      ),
+                      child: const Icon(
+                        Icons.call_end,
+                        color: Colors.white,
+                        size: 35.0,
+                      ),
+                    ),
+            )
+          ],
+        ),
       ),
     );
   }

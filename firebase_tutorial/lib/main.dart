@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_tutorial/views/screens/chat/video_call.dart';
 import 'package:firebase_tutorial/views/screens/chat/video_call_main.dart';
 import 'package:firebase_tutorial/views/screens/chat/voice_call.dart';
+import 'package:firebase_tutorial/views/screens/chat/voice_call_main.dart';
 import 'package:firebase_tutorial/views/screens/home/home.dart';
 import 'package:firebase_tutorial/views/screens/home/mainscreen.dart';
 import 'package:firebase_tutorial/views/screens/login/change_pass.dart';
@@ -60,7 +61,8 @@ class MyApp extends StatelessWidget {
                 '/': (context) => const MainScreen(),
                 '/home': (context) => const HomeScreen(),
                 '/profile': (context) => const ProfileScreen(),
-                '/voice': (context) => const VoiceCallingScreen(),
+                '/voice_test': (context) => const VoiceCallingScreen(),
+                '/voice': (context) => const VoiceCallMainScreen(),
                 '/video_test': (context) => const VideoCallingScreen(),
                 '/video': (context) => const VideoCallMainScreen(),
               });

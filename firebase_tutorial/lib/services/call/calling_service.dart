@@ -21,11 +21,10 @@ class CallingFunction {
   //token renew if expiring
   void renewToken() {
     agoraEngine.renewToken(token);
-
     print('Token renew');
   }
 
-  Future<void> setInformation(String channelCall) async{
+  Future<void> setInformation(String channelCall) async {
     userID = Random().nextInt(100) + Random().nextInt(100);
     channel = channelCall;
     print(channel);
@@ -33,6 +32,7 @@ class CallingFunction {
     print(token);
     print('Inforss: ${token} + ${userID} + ${channel}');
   }
+
   //Setup Voice
   Future<void> setupVoiceSDKEngine() async {
     // // retrieve or request microphone permission
@@ -69,7 +69,7 @@ class CallingFunction {
   Future<void> onVoiceJoin() async {
     // await handleCameraAndMic(Permission.microphone);
     // await [Permission.microphone].request();
-    
+
     ChannelMediaOptions options = const ChannelMediaOptions(
       clientRoleType: ClientRoleType.clientRoleBroadcaster,
       channelProfile: ChannelProfileType.channelProfileCommunication,
@@ -89,63 +89,70 @@ class CallingFunction {
     agoraEngine.leaveChannel();
   }
 
+  ////Video
+  ///SetupVideo
+  Future<void> setupVideoSDKEngine() async {
+    // retrieve or request camera and microphone permissions
+    await [Permission.microphone, Permission.camera].request();
 
-    ////Video
-    ///SetupVideo
-    Future<void> setupVideoSDKEngine() async {
-      // retrieve or request camera and microphone permissions
-      await [Permission.microphone, Permission.camera].request();
+    //create an instance of the Agora engine
+    agoraEngine = createAgoraRtcEngine();
+    await agoraEngine.initialize(const RtcEngineContext(appId: appID));
 
-      //create an instance of the Agora engine
-      agoraEngine = createAgoraRtcEngine();
-      await agoraEngine.initialize(const RtcEngineContext(
-      appId: appID
-      ));
+    await agoraEngine.enableVideo();
 
-      await agoraEngine.enableVideo();
-      
-      // Register the event handler
-      agoraEngine.registerEventHandler(
+    // Register the event handler
+    agoraEngine.registerEventHandler(
       RtcEngineEventHandler(
-          onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
+        onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
           print("Local user uid:${connection.localUid} joined the channel");
           // setState(() {
           //     _isJoined = true;
           // });
-          },
-          onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
+        },
+        onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
           print("Remote user uid:$remoteUid joined the channel");
           // setState(() {
           //     _remoteUid = remoteUid;
           // });
-          },
-          onUserOffline: (RtcConnection connection, int remoteUid,
-              UserOfflineReasonType reason) {
+        },
+        onUserOffline: (RtcConnection connection, int remoteUid,
+            UserOfflineReasonType reason) {
           print("Remote user uid:$remoteUid left the channel");
           // setState(() {
           //     _remoteUid = null;
           // });
-          },
+        },
       ),
-      );
+    );
   }
 
- Future<void>  joinVideoCall() async {
-    
+  Future<void> joinVideoCall() async {
     await agoraEngine.startPreview();
 
     // Set channel options including the client role and channel profile
     ChannelMediaOptions options = const ChannelMediaOptions(
-        clientRoleType: ClientRoleType.clientRoleBroadcaster,
-        channelProfile: ChannelProfileType.channelProfileCommunication,
+      clientRoleType: ClientRoleType.clientRoleBroadcaster,
+      channelProfile: ChannelProfileType.channelProfileCommunication,
     );
 
     await agoraEngine.joinChannel(
-        token: token,
-        channelId: channel,
-        options: options,
-        uid: userID,
+      token: token,
+      channelId: channel,
+      options: options,
+      uid: userID,
     );
   }
 
+  void pressMute(bool check) {
+    agoraEngine.muteLocalAudioStream(check);
+  }
+
+  void pressCamera(bool check) {
+    agoraEngine.muteLocalVideoStream(check);
+  }
+
+  void toggleCamera() {
+    agoraEngine.switchCamera();
+  }
 }

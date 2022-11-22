@@ -17,13 +17,13 @@ class VoiceCallingScreen extends ConsumerStatefulWidget {
   const VoiceCallingScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _VoiceCallingScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _VoiceCallingScreenState();
 }
 
 class _VoiceCallingScreenState extends ConsumerState<VoiceCallingScreen> {
   final voiceCallFunction = CallingFunction();
   late RtcEngine agoraEngine;
-
 
   @override
   void initState() {
@@ -33,8 +33,8 @@ class _VoiceCallingScreenState extends ConsumerState<VoiceCallingScreen> {
 
   @override
   void dispose() async {
-      // await voiceCallFunction.leaveChannel();
-      super.dispose();
+    // await voiceCallFunction.leaveChannel();
+    super.dispose();
   }
 
   @override
@@ -42,31 +42,51 @@ class _VoiceCallingScreenState extends ConsumerState<VoiceCallingScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Agora Test'),
+        title: const Text('Agora Voice Call'),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          height: size.height - 200,
+      body: Stack(children: [
+        Container(
+          color: Colors.white,
           width: size.width,
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              SizedBox(),
-              Spacer(),
-              ElevatedButton(onPressed: (){
-                print('Infor: ${token} + ${userID} + ${channel}');
-                voiceCallFunction.onVoiceJoin();
-              }, child: const Text('Join')),
-              ElevatedButton(onPressed: (){
-                voiceCallFunction.leaveChannel();
-                Navigator.of(context).pop();
-              }, child: const Text('Leave')),
-              SizedBox(),
+              SizedBox(
+                height: 50,
+              ),
+              Icon(
+                Icons.call,
+                color: Colors.blue,
+                size: 200,
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        print('Infor: ${token} + ${userID} + ${channel}');
+                        voiceCallFunction.onVoiceJoin();
+                      },
+                      child: const Text('Join')),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        voiceCallFunction.leaveChannel();
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Leave')),
+                ],
+              ),
             ],
           ),
         ),
-      ),
+      ]),
     );
   }
 }

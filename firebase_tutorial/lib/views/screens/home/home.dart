@@ -18,7 +18,6 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-
   @override
   Widget build(BuildContext context) {
     TokenGenerator tokenGenerator = TokenGenerator();
@@ -26,9 +25,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-          resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: Text('Chew', style: AppTextStyle.appbarTitle,),
+          title: Text(
+            'Chew',
+            style: AppTextStyle.appbarTitle,
+          ),
           centerTitle: true,
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -38,26 +40,52 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/images/Logo.png', scale: 2.5,),
-              SizedBox(height: 23.h,),
-              Text('Welcome, User.........', style: AppTextStyle.appbarTitle,),
-              SizedBox(height: 47.h,),
-              LoginFuncButton(title: 'JOIN Live', color: AppColor.blueButton, onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> const JoinLiveScreen()));
-              }),
-              SizedBox(height: 14.h,),
-              LoginFuncButton(title: 'CREATE Live', color: AppColor.greenButton, onPressed: (){
-                // tokenGenerator.fetchToken(1, 'test', tokenRole);
-              }),
-              SizedBox(height: 14.h,),
-              LoginFuncButton(title: 'PUBLIC Live', color: AppColor.redButton, onPressed: (){
-                [Permission.camera].request();
-                // Navigator.push(
-                //                       context,
-                //                       MaterialPageRoute(
-                //                           builder: (context) =>
-                //                               const LiveListScreen()));
-              }),
+              Image.asset(
+                'assets/images/Logo.png',
+                scale: 2.5,
+              ),
+              SizedBox(
+                height: 23.h,
+              ),
+              Text(
+                'Welcome, User.........',
+                style: AppTextStyle.appbarTitle,
+              ),
+              SizedBox(
+                height: 47.h,
+              ),
+              LoginFuncButton(
+                  title: 'JOIN Live',
+                  color: AppColor.blueButton,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const JoinLiveScreen()));
+                  }),
+              SizedBox(
+                height: 14.h,
+              ),
+              LoginFuncButton(
+                  title: 'CREATE Live',
+                  color: AppColor.greenButton,
+                  onPressed: () {
+                    // tokenGenerator.fetchToken(1, 'test', tokenRole);
+                  }),
+              SizedBox(
+                height: 14.h,
+              ),
+              LoginFuncButton(
+                  title: 'PUBLIC Live',
+                  color: AppColor.redButton,
+                  onPressed: () {
+                    [Permission.camera].request();
+                    // Navigator.push(
+                    //                       context,
+                    //                       MaterialPageRoute(
+                    //                           builder: (context) =>
+                    //                               const LiveListScreen()));
+                  }),
             ],
           ),
         ),
