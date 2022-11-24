@@ -24,9 +24,9 @@ class _VideoCallMainScreenState extends ConsumerState<VideoCallMainScreen> {
   @override
   void initState() {
     setupVideoSDKEngine();
-    setState(() {
-      _isJoined == true;
-    });
+    // setState(() {
+    //   _isJoined == true;
+    // });
     super.initState();
   }
 
@@ -224,7 +224,7 @@ class _VideoCallMainScreenState extends ConsumerState<VideoCallMainScreen> {
                       child: Icon(
                         Icons.swap_calls,
                         color:
-                            (_isFrontCam == false) ? Colors.blue : Colors.red,
+                            (_isFrontCam == false) ? Colors.red : Colors.blue,
                         size: 25.0,
                       ),
                     ),

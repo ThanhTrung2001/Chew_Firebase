@@ -119,7 +119,9 @@ class _VoiceCallMainScreenState extends ConsumerState<VoiceCallMainScreen> {
                   Visibility(
                     visible: true,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        pressMute();
+                      },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.white,
                         shape: CircleBorder(),
