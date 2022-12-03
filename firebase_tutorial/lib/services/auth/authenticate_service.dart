@@ -16,7 +16,7 @@ class AuthenticationService {
   //Check user loged in or not
   Stream<User?> get authStateChange => auth.authStateChanges();
 
-  Future<void> googleSignIn() async {
+  Future<bool> googleSignIn() async {
     final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
 
     final GoogleSignInAuthentication googleAuth =
@@ -55,21 +55,24 @@ class AuthenticationService {
           // ignore: avoid_print
           print(document.data());
         });
+        return true;
       }
     } on FirebaseAuthException catch (e) {
       // ignore: avoid_print
       print(e);
+      return false;
     }
+    return false;
   }
 
-  Future<void> emailSignUp(
+  Future<bool> emailSignUp(
       String email, String password, String username) async {
     try {
       // ignore: unused_local_variable
       UserCredential result = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? userCredential = result.user;
-      if (result != null) {
+      if (result.user != null) {
         FirebaseFirestore.instance
             .collection('user')
             .doc(userCredential!.uid)
@@ -92,35 +95,46 @@ class AuthenticationService {
           }
           // ignore: avoid_print
         });
+        return true;
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         // ignore: avoid_print
         print('The account already exists for that email.');
+        return false;
       }
     } catch (e) {
       // ignore: avoid_print
       print(e);
+      return false;
     }
+    return false;
   }
 
-  Future<void> emailSignIn(String email, String password) async {
+  Future<bool> emailSignIn(String email, String password) async {
     try {
       // ignore: unused_local_variable
-      var user =
-          auth.signInWithEmailAndPassword(email: email, password: password);
+      var result = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      if (result.user != null) {
+        return true;
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         // ignore: avoid_print
         print('No user found for that email.');
+        return false;
       } else if (e.code == 'wrong-password') {
         // ignore: avoid_print
         print('Wrong password provided for that user.');
+        return false;
       }
     } catch (e) {
       // ignore: avoid_print
       print(e);
+      return false;
     }
+    return false;
   }
 
   Future<void> requestResetPassword() async {}

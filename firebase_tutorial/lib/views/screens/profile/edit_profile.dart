@@ -49,90 +49,89 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            LoginInputTextField(controller: nameController, hint: name),
-            SizedBox(
-              height: 10,
-            ),
-            LoginInputTextField(controller: desController, hint: description),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Switch(
-                    value: changePass,
-                    onChanged: (value) {
-                      setState(() {
-                        changePass = value;
-                      });
-                    }),
-                SizedBox(
-                  width: 2,
-                ),
-                Text('Change password'),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            LoginInputTextField(
-                controller: passwordController, hint: "Password"),
-            SizedBox(
-              height: 10,
-            ),
-            LoginInputTextField(
-                controller: retypeController, hint: "Retype Password"),
-            SizedBox(
-              height: 10,
-            ),
-            LoginMiniButton(
-                title: 'Save',
-                color: Colors.green,
-                onPressed: () async {
-                  if (nameController.text == "" || desController.text == "") {
-                    print('Must fill all the field!');
-                  } else {
-                    if (changePass == true) {
-                      if (passwordController.text == "" ||
-                          retypeController.text == "") {
-                        print('Must fill all the field!');
-                      } else if (passwordController.text !=
-                          retypeController.text) {
-                        print("Password & Retype aren't match!");
-                      } else {
-                        final user = await FirebaseAuth.instance.currentUser;
-                        await userFunction.updateUser(
-                            user?.uid, nameController.text, desController.text);
-                        await user
-                            ?.updatePassword(passwordController.text)
-                            .then((_) {
-                          print("Successfully changed password!");
-                        }).catchError((error) {
-                          print("Password can't be changed" + error.toString());
-                          //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
-                        });
-                        FirebaseAuth.instance.signOut();
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginScreen()));
-                      }
-                    } else {
-                      final user = await FirebaseAuth.instance.currentUser;
-                      userFunction.updateUser(
-                          user?.uid, nameController.text, desController.text);
-                    }
-                  }
-                }),
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              Text(
+                "Username",
+                style: TextStyle(
+                    color: AppColor.primaryTextColor,
+                    fontFamily: 'EBGaramond',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 22),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              LoginInputTextField(controller: nameController, hint: name),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                "Description",
+                style: TextStyle(
+                    color: AppColor.primaryTextColor,
+                    fontFamily: 'EBGaramond',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 22),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              LoginInputTextField(controller: desController, hint: description),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  LoginMiniButton(
+                      title: "Change Pass",
+                      color: const Color(0xFF285BA7),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed("/changepass");
+                      }),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  LoginMiniButton(
+                      title: 'Save',
+                      color: Colors.green,
+                      onPressed: () async {
+                        if (nameController.text == "" ||
+                            desController.text == "") {
+                          print('Must fill all the field!');
+                        } else {
+                          final user = await FirebaseAuth.instance.currentUser;
+                          await userFunction.updateUser(user?.uid,
+                              nameController.text, desController.text);
+
+                          Navigator.of(context).pop();
+                          // await user
+                          //     ?.updatePassword(passwordController.text)
+                          //     .then((_) {
+                          //   print("Successfully changed password!");
+                          // }).catchError((error) {
+                          //   print("Password can't be changed" + error.toString());
+                          //   //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
+                          // });
+                          // FirebaseAuth.instance.signOut();
+                          // Navigator.pushReplacement(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => const LoginScreen()));
+
+                        }
+                      }),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

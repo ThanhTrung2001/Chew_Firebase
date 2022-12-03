@@ -26,18 +26,21 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   void search() {
     if (searchController.text == "") {
       setState(() {
-        chatRoomStream = chatRoomFunction.getChatRoomList(FirebaseAuth.instance.currentUser?.displayName);
+        chatRoomStream = chatRoomFunction
+            .getChatRoomList(FirebaseAuth.instance.currentUser?.displayName);
       });
     } else {
       setState(() {
-        chatRoomStream = chatRoomFunction.getChatRoomList(FirebaseAuth.instance.currentUser?.displayName);
+        chatRoomStream = chatRoomFunction
+            .getChatRoomList(FirebaseAuth.instance.currentUser?.displayName);
       });
     }
   }
 
   @override
   void initState() {
-    chatRoomStream = chatRoomFunction.getChatRoomList(FirebaseAuth.instance.currentUser?.displayName);
+    chatRoomStream = chatRoomFunction
+        .getChatRoomList(FirebaseAuth.instance.currentUser?.displayName);
     super.initState();
   }
 
@@ -56,16 +59,16 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           actions: [
-            GestureDetector(
-              onTap: () {
-              },
-              child: AppIcon.userSetting,
-            ),
+            // GestureDetector(
+            //   onTap: () {
+            //   },
+            //   child: AppIcon.userSetting,
+            // ),
           ],
         ),
-        body: Center(
+        body: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: 59.h,
@@ -89,7 +92,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 height: 21.h,
               ),
               Container(
-                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(left: 50),
                   width: 300.w,
                   height: 600.h,
                   child: StreamBuilder(
@@ -111,8 +114,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              ChatRoomScreen(chatRoomID: ds['id'],)));
+                                          builder: (context) => ChatRoomScreen(
+                                                chatRoomID: ds['id'],
+                                              )));
                                 });
                           },
                           separatorBuilder: (BuildContext context, int index) {

@@ -13,6 +13,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../components/dialogs/dialog_notification/dialog_error.dart';
+import '../../components/dialogs/dialog_notification/dialog_warning.dart';
+
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -80,9 +83,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     Padding(
                       padding: EdgeInsets.only(right: 37.w),
                       child: GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           // AuthenticationService().logOut();
-                          Navigator.of(context).pushNamed('/forgot');
+                          // Navigator.of(context).pushNamed('/forgot');
+                          bool i = await authService.emailSignIn(
+                              emailController.text, passController.text);
+                          print("boolean is $i");
                         },
                         child: const Text(
                           'Forgot?',
@@ -101,10 +107,39 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 LoginFuncButton(
                     title: 'Login',
                     color: const Color(0xFF567BC3),
-                    onPressed: () {
-                      authService.emailSignIn(
-                          emailController.text, passController.text);
-                      Navigator.of(context).pushNamed('/');
+                    onPressed: () async {
+                      if (emailController.text == "" ||
+                          passController.text == "") {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                DialogWarningNotification(
+                                    title: 'Warning',
+                                    content:
+                                        "Please fill all of your information."));
+                      } else {
+                        bool i = await authService.emailSignIn(
+                            emailController.text, passController.text);
+                        print(i);
+                        if (i == true) {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  DialogSuccessNotification(
+                                      title: 'Success',
+                                      content: "Waits for seconds and joins."));
+                          Future.delayed(const Duration(seconds: 5), () {
+                            Navigator.of(context).pushNamed('/');
+                          });
+                        } else if (i == false) {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  DialogErrorNotification(
+                                      title: 'Error',
+                                      content: "Invalid email or password!"));
+                        }
+                      }
                     }),
                 SizedBox(
                   height: 8.h,

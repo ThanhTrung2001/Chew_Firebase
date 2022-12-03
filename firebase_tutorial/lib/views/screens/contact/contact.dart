@@ -30,15 +30,12 @@ class _ContactScreenState extends ConsumerState<ContactScreen> {
   final users = FirebaseFirestore.instance;
   late Stream<QuerySnapshot> userStream;
 
-  void search(){
-    if(searchController.text == "")
-    {
+  void search() {
+    if (searchController.text == "") {
       setState(() {
         userStream = userFunction.getUserList();
       });
-    }
-    else
-    {
+    } else {
       setState(() {
         userStream = userFunction.searchuserByName(searchController.text);
       });
@@ -46,11 +43,11 @@ class _ContactScreenState extends ConsumerState<ContactScreen> {
   }
 
   @override
-  void initState()
-  {
+  void initState() {
     userStream = userFunction.getUserList();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -66,10 +63,10 @@ class _ContactScreenState extends ConsumerState<ContactScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           actions: [
-            GestureDetector(
-              onTap: () {},
-              child: AppIcon.userSetting,
-            ),
+            // GestureDetector(
+            //   onTap: () {},
+            //   child: AppIcon.userSetting,
+            // ),
           ],
         ),
         body: Center(
@@ -102,43 +99,41 @@ class _ContactScreenState extends ConsumerState<ContactScreen> {
                   width: 300.w,
                   height: 600.h,
                   child: StreamBuilder(
-                          stream: userStream,
-                          builder:
-                              (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                            if (snapshot.hasData) {
-                              return ListView.separated(
-                                itemCount: snapshot.data!.docs.length,
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: false,
-                                itemBuilder: (BuildContext context, int index) {
-                                  DocumentSnapshot ds =
-                                      snapshot.data!.docs[index];
-                                  if (ds['uid'] !=
-                                      FirebaseAuth.instance.currentUser!.uid) {
-                                    return buildUser(ds['uid'], ds['name'],
-                                        ds['status'], ds['avtLink']);
-                                  } else {
-                                    return SizedBox();
-                                  }
-                                  // return buildUser(ds['uid'],
-                                  //     ds['name'], ds['status'], ds['avtLink']);
-                                },
-                                separatorBuilder:
-                                    (BuildContext context, int index) {
-                                  return SizedBox(
-                                    height: 10.h,
-                                  );
-                                },
+                      stream: userStream,
+                      builder:
+                          (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.separated(
+                            itemCount: snapshot.data!.docs.length,
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: false,
+                            itemBuilder: (BuildContext context, int index) {
+                              DocumentSnapshot ds = snapshot.data!.docs[index];
+                              if (ds['uid'] !=
+                                  FirebaseAuth.instance.currentUser!.uid) {
+                                return buildUser(ds['uid'], ds['name'],
+                                    ds['status'], ds['avtLink']);
+                              } else {
+                                return SizedBox();
+                              }
+                              // return buildUser(ds['uid'],
+                              //     ds['name'], ds['status'], ds['avtLink']);
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return SizedBox(
+                                height: 10.h,
                               );
-                            } else if (snapshot.hasError) {
-                              print(snapshot.error);
-                              return Text(
-                                  'No information about user "${searchController.text}"');
-                            } else {
-                              return Text('loading');
-                            }
-                          })
-                      ),
+                            },
+                          );
+                        } else if (snapshot.hasError) {
+                          print(snapshot.error);
+                          return Text(
+                              'No information about user "${searchController.text}"');
+                        } else {
+                          return Text('loading');
+                        }
+                      })),
             ],
           ),
         ),
@@ -160,10 +155,12 @@ class _ContactScreenState extends ConsumerState<ContactScreen> {
                   )),
         );
       },
-      onPressedMessage: () async{
+      onPressedMessage: () async {
         final userName = await FirebaseAuth.instance.currentUser?.displayName;
-        final chatRoomModel = ChatRoomModel('', name, '', '', FirebaseAuth.instance.currentUser!.uid, [], avtLink);
-        final i = await chatRoomFunction.createChatRoom(chatRoomModel, name, userName!);
+        final chatRoomModel = ChatRoomModel('', name, '', '',
+            FirebaseAuth.instance.currentUser!.uid, [], avtLink);
+        final i = await chatRoomFunction.createChatRoom(
+            chatRoomModel, name, userName!);
         Navigator.push(
           context,
           MaterialPageRoute(

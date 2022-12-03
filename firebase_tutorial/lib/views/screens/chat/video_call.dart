@@ -28,11 +28,11 @@ class _VideoCallingScreenState extends ConsumerState<VideoCallingScreen> {
   int? _remoteUid; // uid of the remote user
   bool _isJoined = false; // Indicates if the local user has joined the channel
   @override
-  void initState()  {
-     setupVideoSDKEngine();
-    setState(() {
-      _isJoined == true;
-    });
+  void initState() {
+    setupVideoSDKEngine();
+    // setState(() {
+    //   _isJoined == true;
+    // });
     super.initState();
   }
 
@@ -42,37 +42,35 @@ class _VideoCallingScreenState extends ConsumerState<VideoCallingScreen> {
 
     //create an instance of the Agora engine
     agoraEngine = createAgoraRtcEngine();
-    await agoraEngine.initialize(const RtcEngineContext(
-    appId: appID
-    ));
+    await agoraEngine.initialize(const RtcEngineContext(appId: appID));
 
     await agoraEngine.enableVideo();
-    
+
     // Register the event handler
     agoraEngine.registerEventHandler(
-    RtcEngineEventHandler(
+      RtcEngineEventHandler(
         onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
-        print("Local user uid:${connection.localUid} joined the channel");
-        setState(() {
+          print("Local user uid:${connection.localUid} joined the channel");
+          setState(() {
             _isJoined = true;
-        });
+          });
         },
         onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
-        print("Remote user uid:$remoteUid joined the channel");
-        setState(() {
+          print("Remote user uid:$remoteUid joined the channel");
+          setState(() {
             _remoteUid = remoteUid;
-        });
+          });
         },
         onUserOffline: (RtcConnection connection, int remoteUid,
             UserOfflineReasonType reason) {
-        print("Remote user uid:$remoteUid left the channel");
-        setState(() {
+          print("Remote user uid:$remoteUid left the channel");
+          setState(() {
             _remoteUid = null;
-        });
+          });
         },
-    ),
+      ),
     );
-}
+  }
 
   void join() async {
     print('Inforss: ${token} + ${userID} + ${channel}');
@@ -84,7 +82,7 @@ class _VideoCallingScreenState extends ConsumerState<VideoCallingScreen> {
       channelProfile: ChannelProfileType.channelProfileCommunication,
     );
     setState(() {
-      _isJoined == true;
+      _isJoined = true;
     });
     await agoraEngine.joinChannel(
       token: token,
@@ -100,18 +98,20 @@ class _VideoCallingScreenState extends ConsumerState<VideoCallingScreen> {
       _remoteUid = null;
     });
     agoraEngine.leaveChannel();
+    Navigator.of(context).pop();
   }
 
   @override
   void dispose() async {
-    if(_isJoined == false){
-      // await agoraEngine.leaveChannel();
+    // await agoraEngine.leaveChannel();
+    if (_isJoined == true) {
       setState(() {
-      _isJoined = false;
-      _remoteUid = null;
-    });
+        _isJoined = false;
+        _remoteUid = null;
+      });
     }
-      super.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -143,7 +143,7 @@ class _VideoCallingScreenState extends ConsumerState<VideoCallingScreen> {
             children: <Widget>[
               Expanded(
                 child: ElevatedButton(
-                  onPressed: _isJoined==true ? null : () => {join()},
+                  onPressed: _isJoined == true ? null : () => {join()},
                   child: const Text("Join"),
                 ),
               ),
@@ -166,10 +166,7 @@ class _VideoCallingScreenState extends ConsumerState<VideoCallingScreen> {
     if (_isJoined == true) {
       return AgoraVideoView(
         controller: VideoViewController(
-          rtcEngine: agoraEngine,
-          canvas: VideoCanvas(uid: userID, view: 1),
-          
-        ),
+            rtcEngine: agoraEngine, canvas: VideoCanvas(uid: 0)),
       );
     } else {
       return const Text(

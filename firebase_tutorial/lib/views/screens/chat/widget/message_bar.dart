@@ -21,7 +21,7 @@ class MessageBar extends ConsumerStatefulWidget {
 class _MessageBarState extends ConsumerState<MessageBar> {
   @override
   Widget build(BuildContext context) {
-     Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return Container(
       height: 65 * size.height / 896,
       decoration: BoxDecoration(
@@ -30,23 +30,28 @@ class _MessageBarState extends ConsumerState<MessageBar> {
           topLeft: Radius.circular(8.0),
           topRight: Radius.circular(8.0),
         ),
-        
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          const SizedBox(
+            width: 20,
+          ),
           GestureDetector(
-            onTap: widget.pressImage,
-            child: Image.asset(
-              'assets/icons/Image.png',
-              scale: 4,
-            ),
+              onTap: widget.pressImage,
+              child: Icon(
+                Icons.image_rounded,
+                size: 35,
+                color: AppColor.blueBorder,
+              )),
+          const SizedBox(
+            width: 10,
           ),
           Container(
             padding: EdgeInsets.only(top: 5.0 * size.height / 896),
             height: 55 * size.height / 896,
-            width: 300 * size.width / 414,
+            width: 320 * size.width / 414,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: AppColor.secondaryTextColor,
@@ -63,7 +68,8 @@ class _MessageBarState extends ConsumerState<MessageBar> {
                 border: InputBorder.none,
                 hintText: 'Type message here...',
                 isCollapsed: true,
-                hintStyle: TextStyle(color: AppColor.subTextColor, fontSize: 16),
+                hintStyle:
+                    TextStyle(color: AppColor.subTextColor, fontSize: 16),
                 suffixIcon: GestureDetector(
                   onTap: widget.sendMessage,
                   child: Image.asset(

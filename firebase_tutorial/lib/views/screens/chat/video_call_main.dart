@@ -76,7 +76,7 @@ class _VideoCallMainScreenState extends ConsumerState<VideoCallMainScreen> {
       channelProfile: ChannelProfileType.channelProfileCommunication,
     );
     setState(() {
-      _isJoined == true;
+      _isJoined = true;
     });
     await agoraEngine.joinChannel(
       token: token,
@@ -134,137 +134,141 @@ class _VideoCallMainScreenState extends ConsumerState<VideoCallMainScreen> {
         centerTitle: true,
         backgroundColor: Colors.black,
       ),
-      body: Container(
-        color: Colors.black,
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            //Remote View
-            Positioned(
-                top: 0,
-                child: Container(
-                  width: size.width,
-                  height: size.height * 0.7,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black, width: 2),
-                  ),
-                  child: _remoteVideo(),
-                )),
-            //UserView
-            Positioned(
-                top: size.height * 0.7 - 150,
-                right: 0,
-                child: Container(
-                  width: 120,
-                  height: 150,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.cyan,
-                    border: Border.all(color: Colors.black, width: 2),
-                  ),
-                  child: _localPreview(),
-                )),
-            //Button Mic
-            Positioned(
-                top: size.height * 0.72,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //Button Mic
-                    ElevatedButton(
-                      onPressed: () {
-                        pressMute();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(7.0),
-                      ),
-                      child: Icon(
-                        Icons.mic,
-                        color: (_isMuted == false) ? Colors.blue : Colors.grey,
-                        size: 25.0,
-                      ),
+      body: Center(
+        child: Container(
+          color: Colors.black,
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              //Remote View
+              Positioned(
+                  top: 0,
+                  child: Container(
+                    width: size.width,
+                    height: size.height * 0.7,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black, width: 2),
                     ),
-                    SizedBox(
-                      width: 10,
+                    child: _remoteVideo(),
+                  )),
+              //UserView
+              Positioned(
+                  top: size.height * 0.7 - 150,
+                  right: 0,
+                  child: Container(
+                    width: 120,
+                    height: 150,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.cyan,
+                      border: Border.all(color: Colors.black, width: 2),
                     ),
-                    //Button Camera
-                    ElevatedButton(
-                      onPressed: () {
-                        pressCamera();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(7.0),
+                    child: _localPreview(),
+                  )),
+              //Button Mic
+              Positioned(
+                  top: size.height * 0.72,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //Button Mic
+                      ElevatedButton(
+                        onPressed: () {
+                          pressMute();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(7.0),
+                        ),
+                        child: Icon(
+                          Icons.mic,
+                          color:
+                              (_isMuted == false) ? Colors.blue : Colors.grey,
+                          size: 25.0,
+                        ),
                       ),
-                      child: Icon(
-                        Icons.camera_alt_rounded,
-                        color:
-                            (_isAvoidCam == false) ? Colors.blue : Colors.grey,
-                        size: 25.0,
+                      SizedBox(
+                        width: 10,
                       ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    //Button Switch Camera
-                    ElevatedButton(
-                      onPressed: () {
-                        toggleCamera();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(7.0),
+                      //Button Camera
+                      ElevatedButton(
+                        onPressed: () {
+                          pressCamera();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(7.0),
+                        ),
+                        child: Icon(
+                          Icons.camera_alt_rounded,
+                          color: (_isAvoidCam == false)
+                              ? Colors.blue
+                              : Colors.grey,
+                          size: 25.0,
+                        ),
                       ),
-                      child: Icon(
-                        Icons.swap_calls,
-                        color:
-                            (_isFrontCam == false) ? Colors.red : Colors.blue,
-                        size: 25.0,
+                      SizedBox(
+                        width: 10,
                       ),
-                    ),
-                  ],
-                )),
-            //Join & Leave Channel button
-            Positioned(
-              top: size.height * 0.785,
-              child: (_isJoined == false)
-                  ? ElevatedButton(
-                      onPressed: () {
-                        join();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Color.fromARGB(255, 63, 133, 66),
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(10.0),
+                      //Button Switch Camera
+                      ElevatedButton(
+                        onPressed: () {
+                          toggleCamera();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(7.0),
+                        ),
+                        child: Icon(
+                          Icons.swap_calls,
+                          color:
+                              (_isFrontCam == false) ? Colors.red : Colors.blue,
+                          size: 25.0,
+                        ),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: const Text("Start"),
+                    ],
+                  )),
+              //Join & Leave Channel button
+              Positioned(
+                top: size.height * 0.785,
+                child: (_isJoined == false)
+                    ? ElevatedButton(
+                        onPressed: () {
+                          join();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Color.fromARGB(255, 63, 133, 66),
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(10.0),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: const Text("Start"),
+                        ),
+                      )
+                    : ElevatedButton(
+                        onPressed: () {
+                          leave();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.red,
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(10.0),
+                        ),
+                        child: const Icon(
+                          Icons.call_end,
+                          color: Colors.white,
+                          size: 35.0,
+                        ),
                       ),
-                    )
-                  : ElevatedButton(
-                      onPressed: () {
-                        leave();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.red,
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(10.0),
-                      ),
-                      child: const Icon(
-                        Icons.call_end,
-                        color: Colors.white,
-                        size: 35.0,
-                      ),
-                    ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -275,7 +279,7 @@ class _VideoCallMainScreenState extends ConsumerState<VideoCallMainScreen> {
       return AgoraVideoView(
         controller: VideoViewController(
           rtcEngine: agoraEngine,
-          canvas: VideoCanvas(uid: userID, view: 1),
+          canvas: VideoCanvas(uid: 0),
         ),
       );
     } else {

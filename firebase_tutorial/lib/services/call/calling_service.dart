@@ -25,7 +25,7 @@ class CallingFunction {
   }
 
   Future<void> setInformation(String channelCall) async {
-    userID = Random().nextInt(100) + Random().nextInt(100);
+    // userID = Random().nextInt(100) + Random().nextInt(100);
     channel = channelCall;
     print(channel);
     tokenGenerator.fetchToken(userID, channel, tokenRole);

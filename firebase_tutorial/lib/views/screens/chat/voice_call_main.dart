@@ -71,106 +71,87 @@ class _VoiceCallMainScreenState extends ConsumerState<VoiceCallMainScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text('Agora Voice Call'),
         centerTitle: true,
       ),
-      body: Stack(children: [
-        Container(
-          color: Colors.black,
-          width: size.width,
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 50,
-              ),
-              Icon(
-                Icons.mic,
-                color: Colors.white,
-                size: 200,
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     ElevatedButton(
-              //         onPressed: () {
-              //           join();
-              //         },
-              //         child: const Text('Join')),
-              //     SizedBox(
-              //       width: 20,
-              //     ),
-              //     ElevatedButton(
-              //         onPressed: () {
-              //           voiceCallFunction.leaveChannel();
-              //           Navigator.of(context).pop();
-              //         },
-              //         child: const Text('Leave')),
-              //   ],
-              // ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Visibility(
-                    visible: true,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        pressMute();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(10.0),
-                      ),
-                      child: Icon(
-                        Icons.mic_none_rounded,
-                        color: (_isMuted == false) ? Colors.red : Colors.grey,
-                        size: 35.0,
-                      ),
+      body: Container(
+        color: Colors.black,
+        width: size.width,
+        height: size.height,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 250,
+            ),
+            Icon(
+              Icons.mic,
+              color: Colors.white,
+              size: 200,
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Visibility(
+                  visible: true,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      pressMute();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                      shape: CircleBorder(),
+                      padding: EdgeInsets.all(10.0),
+                    ),
+                    child: Icon(
+                      Icons.mic_none_rounded,
+                      color: (_isMuted == false) ? Colors.red : Colors.grey,
+                      size: 35.0,
                     ),
                   ),
-                  (_isJoined == false)
-                      ? ElevatedButton(
-                          onPressed: () {
-                            join();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: Color.fromARGB(255, 63, 133, 66),
-                            shape: CircleBorder(),
-                            padding: EdgeInsets.all(10.0),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: const Text("Start"),
-                          ),
-                        )
-                      : ElevatedButton(
-                          onPressed: () {
-                            leave();
-                            Navigator.of(context).pop();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
-                            shape: CircleBorder(),
-                            padding: EdgeInsets.all(10.0),
-                          ),
-                          child: const Icon(
-                            Icons.call_end,
-                            color: Colors.white,
-                            size: 35.0,
-                          ),
+                ),
+                (_isJoined == false)
+                    ? ElevatedButton(
+                        onPressed: () {
+                          join();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Color.fromARGB(255, 63, 133, 66),
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(10.0),
                         ),
-                ],
-              ),
-            ],
-          ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: const Text("Start"),
+                        ),
+                      )
+                    : ElevatedButton(
+                        onPressed: () {
+                          leave();
+                          Navigator.of(context).pop();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.red,
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(10.0),
+                        ),
+                        child: const Icon(
+                          Icons.call_end,
+                          color: Colors.white,
+                          size: 35.0,
+                        ),
+                      ),
+              ],
+            ),
+          ],
         ),
-      ]),
+      ),
     );
   }
 }

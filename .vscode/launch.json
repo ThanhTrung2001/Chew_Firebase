@@ -6,18 +6,20 @@
     "configurations": [
         {
             "name": "firebase_tutorial",
+            "cwd": "firebase_tutorial",
             "request": "launch",
-            "type": "dart",
-            "args": ["--fast-start", "--no-sound-null-safety"]
+            "type": "dart"
         },
         {
             "name": "firebase_tutorial (profile mode)",
+            "cwd": "firebase_tutorial",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
             "name": "firebase_tutorial (release mode)",
+            "cwd": "firebase_tutorial",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

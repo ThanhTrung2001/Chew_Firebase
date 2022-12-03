@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_tutorial/services/auth/authenticate_service.dart';
 import 'package:firebase_tutorial/services/user/user_service.dart';
 import 'package:firebase_tutorial/views/components/buttons/button_login.dart';
+import 'package:firebase_tutorial/views/components/dialogs/dialog_notification/dialog_error.dart';
 import 'package:firebase_tutorial/views/components/textfields/textfield_login.dart';
 import 'package:firebase_tutorial/views/screens/home/home.dart';
 import 'package:firebase_tutorial/views/screens/login/widgets/thirdparty_login_button.dart';
@@ -10,6 +11,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../../components/dialogs/dialog_notification/dialog_success.dart';
+import '../../components/dialogs/dialog_notification/dialog_warning.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -109,8 +113,13 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     Padding(
                       padding: EdgeInsets.only(right: 37.w),
                       child: GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushNamed('/forgot');
+                        onTap: () async {
+                          // Navigator.of(context).pushNamed('/forgot');
+                          bool i = await authService.emailSignUp(
+                              emailController.text,
+                              passController.text,
+                              usernameController.text);
+                          print(i);
                         },
                         child: const Text(
                           'Forgot?',
@@ -129,10 +138,43 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 LoginFuncButton(
                     title: 'Signup',
                     color: const Color(0xFFB22759),
-                    onPressed: (){
-                      
-                      authService.emailSignUp(emailController.text,passController.text, usernameController.text);
-                      Navigator.of(context).pushNamed('/');
+                    onPressed: () async {
+                      if (emailController.text == "" ||
+                          usernameController.text == "" ||
+                          passController.text == "" ||
+                          passRetypeController.text == "") {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                DialogWarningNotification(
+                                    title: 'Warning',
+                                    content:
+                                        "Please fill all of your information."));
+                      } else {
+                        bool i = await authService.emailSignUp(
+                            emailController.text,
+                            passController.text,
+                            usernameController.text);
+                        // ignore: unrelated_type_equality_checks
+                        if (i == false) {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  DialogErrorNotification(
+                                      title: 'Error', content: "Email exist!"));
+                          // ignore: unrelated_type_equality_checks
+                        } else if (i == true) {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  DialogSuccessNotification(
+                                      title: 'Success',
+                                      content: "Move to LoginPage & login."));
+                          Future.delayed(const Duration(seconds: 5), () {
+                            Navigator.of(context).pushNamed('/login');
+                          });
+                        }
+                      }
                     }),
                 SizedBox(
                   height: 8.h,

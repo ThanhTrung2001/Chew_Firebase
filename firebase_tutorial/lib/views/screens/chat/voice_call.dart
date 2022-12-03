@@ -33,7 +33,7 @@ class _VoiceCallingScreenState extends ConsumerState<VoiceCallingScreen> {
 
   @override
   void dispose() async {
-    // await voiceCallFunction.leaveChannel();
+    await voiceCallFunction.leaveChannel();
     super.dispose();
   }
 

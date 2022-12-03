@@ -75,17 +75,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               SizedBox(
                 height: 14.h,
               ),
-              LoginFuncButton(
-                  title: 'PUBLIC ROOM',
-                  color: AppColor.redButton,
-                  onPressed: () {
-                    [Permission.camera].request();
-                    // Navigator.push(
-                    //                       context,
-                    //                       MaterialPageRoute(
-                    //                           builder: (context) =>
-                    //                               const LiveListScreen()));
-                  }),
+              // LoginFuncButton(
+              //     title: 'PUBLIC ROOM',
+              //     color: AppColor.redButton,
+              //     onPressed: () {
+              //       // [Permission.camera].request();
+              //       // Navigator.push(
+              //       //                       context,
+              //       //                       MaterialPageRoute(
+              //       //                           builder: (context) =>
+              //       //                               const LiveListScreen()));
+              //     }),
             ],
           ),
         ),

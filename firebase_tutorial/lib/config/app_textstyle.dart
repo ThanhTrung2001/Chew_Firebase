@@ -22,48 +22,43 @@ class AppTextStyle {
       color: AppColor.forgotTextColor,
       fontFamily: 'EBGaramond',
       fontWeight: FontWeight.w300,
-      fontSize: 18.sp);  
+      fontSize: 18.sp);
 
   static final buttonText = TextStyle(
       color: AppColor.secondaryTextColor,
       fontFamily: 'EBGaramond',
       fontWeight: FontWeight.w800,
       fontSize: 22.sp);
-  
+
   //LiveItem
   static final liveTitleGrid = TextStyle(
       color: AppColor.primaryTextColor,
       fontFamily: 'EBGaramond',
       fontWeight: FontWeight.w600,
-      fontSize: 16.sp);
+      fontSize: 22);
 
   static final statusOrTag = TextStyle(
       color: AppColor.primaryTextColor,
       fontFamily: 'EBGaramond',
       fontSize: 13.sp);
-  
+
   static final numView = TextStyle(
-      color: AppColor.subTextColor,
-      fontFamily: 'EBGaramond',
-      fontSize: 11.sp);
+      color: AppColor.subTextColor, fontFamily: 'EBGaramond', fontSize: 11.sp);
 
 //Dialog
   static final titleDialog = TextStyle(
       color: AppColor.primaryTextColor,
       fontFamily: 'FreckleFace',
       fontSize: 23.sp);
-  
+
   static final subTitleDialog = TextStyle(
       color: AppColor.primaryTextColor,
       fontFamily: 'EBGaramond',
       fontSize: 15.sp);
-  
+
   static final buttonDialogText = TextStyle(
       color: AppColor.secondaryTextColor,
       fontFamily: 'EBGaramond',
       fontWeight: FontWeight.w600,
       fontSize: 16.sp);
-
-
-  
 }
