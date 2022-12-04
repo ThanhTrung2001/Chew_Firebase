@@ -56,7 +56,7 @@ class _MainScreenState extends State<MainScreen> {
             ProfileScreen(),
             ContactScreen(),
             ChatScreen(),
-            HomeScreen(),
+            // HomeScreen(),
             // ProfileScreen(),
           ],
         ),
@@ -76,10 +76,10 @@ class _MainScreenState extends State<MainScreen> {
                 icon: currentIndex == 2
                     ? AppIcon.settingActive
                     : AppIcon.settingUnActive),
-            CustomNavigationBarItem(
-                icon: currentIndex == 3
-                    ? AppIcon.homeActive
-                    : AppIcon.homeUnActive),
+            // CustomNavigationBarItem(
+            //     icon: currentIndex == 3
+            //         ? AppIcon.homeActive
+            //         : AppIcon.homeUnActive),
           ],
           currentIndex: currentIndex,
           onTap: (index) {
@@ -94,16 +94,16 @@ class _MainScreenState extends State<MainScreen> {
                 case 2:
                   navigation(0);
                   break;
-                case 3:
-                  navigation(3);
-                  break;
+                // case 3:
+                //   navigation(3);
+                //   break;
                 // case 4:
                 //   navigation(4);
                 //  break;
               }
               setState(() {
                 currentIndex = index;
-                print(index);
+                // print(index);
               });
             }
           },
