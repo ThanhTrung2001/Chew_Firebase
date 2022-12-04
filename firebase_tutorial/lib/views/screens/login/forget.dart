@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../components/dialogs/dialog_notification/dialog_success.dart';
+
 class ForgotScreen extends ConsumerStatefulWidget {
   const ForgotScreen({Key? key}) : super(key: key);
 
@@ -20,7 +22,7 @@ class _ForgotScreenState extends ConsumerState<ForgotScreen> {
   final emailController = TextEditingController();
   final googleSignIn = GoogleSignIn();
   FirebaseAuth auth = FirebaseAuth.instance;
-  
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -29,19 +31,22 @@ class _ForgotScreenState extends ConsumerState<ForgotScreen> {
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(50),
-        child: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: Padding(
-            padding: EdgeInsets.only(top: 17.h, left: 10.w),
-            child: GestureDetector(
-              onTap: (){
-                Navigator.of(context).pop();
-              },
-              child: Image.asset('assets/icons/Back.png', scale: 3,)),
-          ),
-        )),
+          preferredSize: const Size.fromHeight(50),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: Padding(
+              padding: EdgeInsets.only(top: 17.h, left: 10.w),
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Image.asset(
+                    'assets/icons/Back.png',
+                    scale: 3,
+                  )),
+            ),
+          )),
       body: SingleChildScrollView(
         child: SizedBox(
           height: size.height,
@@ -74,7 +79,10 @@ class _ForgotScreenState extends ConsumerState<ForgotScreen> {
                 SizedBox(
                   height: 95.h,
                 ),
-                Text('Type your registered email:', style: TextStyle(fontSize: 18.sp, color: Colors.black),),
+                Text(
+                  'Type your registered email:',
+                  style: TextStyle(fontSize: 18.sp, color: Colors.black),
+                ),
                 SizedBox(
                   height: 24.h,
                 ),
@@ -82,31 +90,46 @@ class _ForgotScreenState extends ConsumerState<ForgotScreen> {
                 SizedBox(
                   height: 24.h,
                 ),
-                LoginFuncButton(title: 'Send Code', color: const Color(0xFF285BA7), onPressed: (){
-                  Navigator.of(context).pushNamed('/verify');
-                }),
+                LoginFuncButton(
+                    title: 'Send Code',
+                    color: const Color(0xFF285BA7),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) =>
+                              DialogSuccessNotification(
+                                  title: 'Success',
+                                  content:
+                                      "Check your mail to reset password & login."));
+                      Future.delayed(const Duration(seconds: 5), () {
+                        Navigator.of(context).pushNamed('/login');
+                      });
+                    }),
                 const Spacer(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Divider(
-                        thickness: 1.5.h,
-                      ),
-                      SizedBox(height: 20.h,),
-                      Text('Copyright@ 2022 by Guineaa', style: TextStyle(fontSize: 18.sp, color: const Color(0xFFA4A4A4)),),
-                      SizedBox(height: 18.h,)
-                    ],
-                  )
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Divider(
+                      thickness: 1.5.h,
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'Copyright@ 2022 by Guineaa',
+                      style: TextStyle(
+                          fontSize: 18.sp, color: const Color(0xFFA4A4A4)),
+                    ),
+                    SizedBox(
+                      height: 18.h,
+                    )
+                  ],
+                )
                 // Expanded(
                 //   child: Column(
 
                 //   )),
-                
-                
-                
-                
-                
-                
+
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.spaceAround,
                 //   children: [
@@ -189,5 +212,3 @@ class _ForgotScreenState extends ConsumerState<ForgotScreen> {
     ));
   }
 }
-
-

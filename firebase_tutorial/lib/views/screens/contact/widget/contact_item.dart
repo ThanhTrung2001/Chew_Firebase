@@ -10,14 +10,20 @@ class ContactItem extends ConsumerStatefulWidget {
   String status;
   VoidCallback onPressedAvatar;
   VoidCallback onPressedMessage;
-  ContactItem({Key? key, required this.name, required this.status, required this.avtLink, required this.onPressedAvatar, required this.onPressedMessage}) : super(key: key);
+  ContactItem(
+      {Key? key,
+      required this.name,
+      required this.status,
+      required this.avtLink,
+      required this.onPressedAvatar,
+      required this.onPressedMessage})
+      : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ContactItemState();
 }
 
 class _ContactItemState extends ConsumerState<ContactItem> {
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -25,25 +31,30 @@ class _ContactItemState extends ConsumerState<ContactItem> {
         GestureDetector(
           onTap: widget.onPressedAvatar,
           child: CircleAvatar(
-            radius: 40.w,
+            radius: 35.w,
             backgroundColor: AppColor.blackBorder,
-            backgroundImage: NetworkImage('https://i.imgur.com/AOZhwOx.png',),
+            backgroundImage: NetworkImage(
+              widget.avtLink,
+            ),
           ),
         ),
-        SizedBox(width: 17.w,),
+        SizedBox(
+          width: 17.w,
+        ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(widget.name),
-            SizedBox(height: 2.h,),
+            SizedBox(
+              height: 2.h,
+            ),
             Text(widget.status),
           ],
         ),
         Spacer(),
         GestureDetector(
-          onTap: widget.onPressedMessage,
-          child: AppIcon.chatActive),
+            onTap: widget.onPressedMessage, child: AppIcon.chatActive),
       ],
     );
   }

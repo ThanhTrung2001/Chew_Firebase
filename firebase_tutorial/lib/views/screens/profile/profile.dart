@@ -197,7 +197,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         title: 'Log Out',
                         color: Colors.blue,
                         onPressed: () {
-                          authenticationService.logOut();
+                          authenticationService.logOutGoogle();
                           Navigator.of(context).pushNamed('/login');
                         }),
                   ],

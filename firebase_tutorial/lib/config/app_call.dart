@@ -20,6 +20,7 @@ String serverUrl = "chewnodejstokengenerator-production.up.railway.app";
 
 //Token ExpiringTIme
 int tokenExpireTime = 1000; // Expire time in Seconds.
+
 //Is Token expiring for renew
 bool isTokenExpiring = false; // Set to true when the token is about to expire
 String androidIP = "10.0.222.90:8080";

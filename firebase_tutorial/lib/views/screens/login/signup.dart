@@ -113,13 +113,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     Padding(
                       padding: EdgeInsets.only(right: 37.w),
                       child: GestureDetector(
-                        onTap: () async {
-                          // Navigator.of(context).pushNamed('/forgot');
-                          bool i = await authService.emailSignUp(
-                              emailController.text,
-                              passController.text,
-                              usernameController.text);
-                          print(i);
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/forgot');
                         },
                         child: const Text(
                           'Forgot?',

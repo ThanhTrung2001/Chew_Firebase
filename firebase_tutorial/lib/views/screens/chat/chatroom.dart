@@ -66,8 +66,8 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
                 onTap: () {
                   callingFunction.setInformation(widget.chatRoomID);
                   // await callingFunction.onJoin();
-                  // Navigator.of(context).pushNamed('/voice');
-                  Navigator.of(context).pushNamed('/voice_test');
+                  Navigator.of(context).pushNamed('/voice');
+                  // Navigator.of(context).pushNamed('/voice_test');
                 },
                 child: Icon(
                   Icons.call_rounded,
@@ -81,9 +81,9 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
               GestureDetector(
                 onTap: () {
                   callingFunction.setInformation(widget.chatRoomID);
-                  // Navigator.of(context).pushNamed('/video');
+                  Navigator.of(context).pushNamed('/video');
                   // //use for test
-                  Navigator.of(context).pushNamed('/video_test');
+                  // Navigator.of(context).pushNamed('/video_test');
                 },
                 child: Icon(
                   Icons.video_camera_back,

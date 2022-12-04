@@ -83,12 +83,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     Padding(
                       padding: EdgeInsets.only(right: 37.w),
                       child: GestureDetector(
-                        onTap: () async {
+                        onTap: () {
                           // AuthenticationService().logOut();
-                          // Navigator.of(context).pushNamed('/forgot');
-                          bool i = await authService.emailSignIn(
-                              emailController.text, passController.text);
-                          print("boolean is $i");
+                          Navigator.of(context).pushNamed('/forgot');
                         },
                         child: const Text(
                           'Forgot?',
@@ -172,22 +169,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ThirdPartyLoginButton(
-                      imgLink: 'assets/images/Facebook.png',
-                      onPressed: () {
-                        // showDialog(
-                        //     context: context,
-                        //     builder: (context) => DialogSuccessNotification(
-                        //         title: 'Successful!',
-                        //         content: 'Direct to homepage.'));
-                      },
-                    ),
-                    SizedBox(width: 21.w),
+                    // ThirdPartyLoginButton(
+                    //   imgLink: 'assets/images/Facebook.png',
+                    //   onPressed: () {
+                    //     // showDialog(
+                    //     //     context: context,
+                    //     //     builder: (context) => DialogSuccessNotification(
+                    //     //         title: 'Successful!',
+                    //     //         content: 'Direct to homepage.'));
+                    //   },
+                    // ),
+                    // SizedBox(width: 21.w),
                     ThirdPartyLoginButton(
                       imgLink: 'assets/images/Google.png',
-                      onPressed: () {
-                        // signInWithGoogle();
-                        // print(user?.displayName);
+                      onPressed: () async {
+                        await authService.googleSignIn();
+                        Navigator.of(context).pushNamed('/');
                       },
                     ),
                   ],
