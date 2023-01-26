@@ -144,11 +144,11 @@ class AuthenticationService {
   Future<void> updateInformation() async {}
 
   Future<void> logOut() async {
-    auth.signOut();
+    await auth.signOut();
   }
 
   Future<void> logOutGoogle() async {
-    logOut();
-    signIn.signOut();
+    // logOut();
+    await signIn.signOut();
   }
 }

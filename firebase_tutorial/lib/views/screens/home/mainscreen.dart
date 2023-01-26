@@ -53,10 +53,11 @@ class _MainScreenState extends State<MainScreen> {
           controller: pageController,
           onPageChanged: onPageChanged,
           children: const [
+            HomeScreen(),
             ProfileScreen(),
             ContactScreen(),
             ChatScreen(),
-            // HomeScreen(),
+
             // ProfileScreen(),
           ],
         ),
@@ -74,29 +75,29 @@ class _MainScreenState extends State<MainScreen> {
                     : AppIcon.contactUnActive),
             CustomNavigationBarItem(
                 icon: currentIndex == 2
+                    ? AppIcon.homeActive
+                    : AppIcon.homeUnActive),
+            CustomNavigationBarItem(
+                icon: currentIndex == 3
                     ? AppIcon.settingActive
                     : AppIcon.settingUnActive),
-            // CustomNavigationBarItem(
-            //     icon: currentIndex == 3
-            //         ? AppIcon.homeActive
-            //         : AppIcon.homeUnActive),
           ],
           currentIndex: currentIndex,
           onTap: (index) {
             if (currentIndex != index) {
               switch (index) {
                 case 0:
-                  navigation(2);
+                  navigation(3);
                   break;
                 case 1:
-                  navigation(1);
+                  navigation(2);
                   break;
                 case 2:
                   navigation(0);
                   break;
-                // case 3:
-                //   navigation(3);
-                //   break;
+                case 3:
+                  navigation(1);
+                  break;
                 // case 4:
                 //   navigation(4);
                 //  break;

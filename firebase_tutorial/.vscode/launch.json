@@ -8,7 +8,7 @@
             "name": "firebase_tutorial",
             "request": "launch",
             "type": "dart",
-            "args": ["--fast-start", "--no-sound-null-safety"]
+            "args": [ "--no-sound-null-safety"]
         },
         {
             "name": "firebase_tutorial (profile mode)",

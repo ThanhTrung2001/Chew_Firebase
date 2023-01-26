@@ -76,4 +76,6 @@ class UserFunction {
   String? getUID() {
     return auth.currentUser?.uid;
   }
+
+  String? getFriendUID() {}
 }
