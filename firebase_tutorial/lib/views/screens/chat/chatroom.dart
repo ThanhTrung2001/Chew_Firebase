@@ -144,6 +144,7 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
                                     widget.chatRoomID,
                                     FirebaseAuth.instance.currentUser!.uid,
                                     messageController.text);
+                                messageController.clear();
                               }),
                         ],
                       ),

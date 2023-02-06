@@ -24,6 +24,16 @@ class ImageFunction {
     }
   }
 
+  Future<void> uploadPostImage(
+      String path, String currentID, String name) async {
+    File file = File(path);
+    try {
+      await storage.ref('posts/$currentID/$name').putFile(file);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<firebase_storage.ListResult> listFiles() async {
     firebase_storage.ListResult results = await storage.ref('test').listAll();
 
@@ -41,6 +51,12 @@ class ImageFunction {
 
   Future<String> downloadAvatarURL(String imgName) async {
     String downloadURL = await storage.ref('avatar/$imgName').getDownloadURL();
+    return downloadURL;
+  }
+
+  Future<String> downloadPostURL(String uid, String imgName) async {
+    String downloadURL =
+        await storage.ref('posts/$uid/$imgName').getDownloadURL();
     return downloadURL;
   }
 }

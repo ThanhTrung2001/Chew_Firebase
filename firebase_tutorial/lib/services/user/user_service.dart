@@ -18,19 +18,19 @@ class UserFunction {
     });
   }
 
-  bool findUser() {
-    // ignore: unnecessary_null_comparison
-    if (docUser.doc(auth.currentUser!.uid).get() != null) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // bool findUser() {
+  //   // ignore: unnecessary_null_comparison
+  //   if (docUser.doc(auth.currentUser!.uid).get() != null) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   Future createNewUser(uid, userName, email, avtLink, status, bool inLive,
       description, List<String> followingID, List<String> followerID) async {
-    final user = UserModel(uid, userName, email, avtLink, status, inLive,
-        description, followingID, followerID);
+    final user =
+        UserModel(uid, userName, email, avtLink, status, inLive, description);
     final json = user.toJson();
     await docUser.doc(uid).set(json);
   }
@@ -67,14 +67,24 @@ class UserFunction {
   Future<void> updateUser(
       String? userID, String name1, String description1) async {
     docUser.doc(userID).update({'name': name1, 'description': description1});
+    FirebaseAuth.instance.currentUser!.updateDisplayName(name1);
   }
 
   Future<void> updateImage(String userID, String image) async {
     docUser.doc(userID).update({'avtLink': image});
+    FirebaseAuth.instance.currentUser!.updatePhotoURL(image);
   }
 
   String? getUID() {
     return auth.currentUser?.uid;
+  }
+
+  Future<String?> getAvtLink(String userID) async {
+    String? avtLink = '';
+    final user = docUser.doc(userID).get().then((DocumentSnapshot document) {
+      avtLink = document.get('avtLink');
+    });
+    return avtLink;
   }
 
   String? getFriendUID() {}

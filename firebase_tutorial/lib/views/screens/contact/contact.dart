@@ -156,11 +156,11 @@ class _ContactScreenState extends ConsumerState<ContactScreen> {
         );
       },
       onPressedMessage: () async {
-        final userName = await FirebaseAuth.instance.currentUser?.displayName;
+        final userUID = await FirebaseAuth.instance.currentUser?.uid;
         final chatRoomModel = ChatRoomModel('', name, '', '',
             FirebaseAuth.instance.currentUser!.uid, [], avtLink);
-        final i = await chatRoomFunction.createChatRoom(
-            chatRoomModel, name, userName!);
+        final i =
+            await chatRoomFunction.createChatRoom(chatRoomModel, uid, userUID!);
         Navigator.push(
           context,
           MaterialPageRoute(

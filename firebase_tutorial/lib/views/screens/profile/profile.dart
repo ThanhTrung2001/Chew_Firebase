@@ -127,46 +127,46 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     SizedBox(
                       height: 31.h,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              '${snapshot.data['followingID'].length}',
-                            ),
-                            SizedBox(height: 17.h),
-                            Text(
-                              'Following',
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 28.w,
-                        ),
-                        Container(
-                          height: 35.h,
-                          width: 2.w,
-                          color: AppColor.subBorder,
-                        ),
-                        SizedBox(
-                          width: 28.w,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              '${snapshot.data['followerID'].length}',
-                            ),
-                            SizedBox(height: 17.h),
-                            Text(
-                              'Follower',
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     Column(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Text(
+                    //           '${snapshot.data['followingID'].length}',
+                    //         ),
+                    //         SizedBox(height: 17.h),
+                    //         Text(
+                    //           'Following',
+                    //         ),
+                    //       ],
+                    //     ),
+                    //     SizedBox(
+                    //       width: 28.w,
+                    //     ),
+                    //     Container(
+                    //       height: 35.h,
+                    //       width: 2.w,
+                    //       color: AppColor.subBorder,
+                    //     ),
+                    //     SizedBox(
+                    //       width: 28.w,
+                    //     ),
+                    //     Column(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Text(
+                    //           '${snapshot.data['followerID'].length}',
+                    //         ),
+                    //         SizedBox(height: 17.h),
+                    //         Text(
+                    //           'Follower',
+                    //         ),
+                    //       ],
+                    //     )
+                    //   ],
+                    // ),
                     SizedBox(
                       height: 19.h,
                     ),

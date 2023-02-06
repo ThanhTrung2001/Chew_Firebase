@@ -7,11 +7,11 @@ class ChatRoomFuction {
   final docChatRoom = FirebaseFirestore.instance.collection('chatroom');
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  Future<String?> createChatRoom(ChatRoomModel chatRoomModel,
-      String contactName, String currentUserName) async {
-    chatRoomModel.userInRoom = [contactName, currentUserName];
-    chatRoomModel.id = "${contactName}_${currentUserName}";
-    String id2 = "${currentUserName}_${contactName}";
+  Future<String?> createChatRoom(
+      ChatRoomModel chatRoomModel, String contactUID, String currentUID) async {
+    chatRoomModel.userInRoom = [contactUID, currentUID];
+    chatRoomModel.id = "${contactUID}_${currentUID}";
+    String id2 = "${currentUID}_${contactUID}";
     final snapShot1 = await FirebaseFirestore.instance
         .collection("chatroom")
         .doc(chatRoomModel.id)
@@ -34,15 +34,15 @@ class ChatRoomFuction {
           chatRoomModel.userInRoom,
           chatRoomModel.avtLink);
       final json = chatroom.toJson();
-      await docChatRoom.doc('${contactName}_${currentUserName}').set(json);
+      await docChatRoom.doc('${contactUID}_${currentUID}').set(json);
       print('new chatroom');
       return chatRoomModel.id;
     }
   }
 
-  Stream<QuerySnapshot> getChatRoomList(username) {
+  Stream<QuerySnapshot> getChatRoomList(uid) {
     return docChatRoom
-        .where('userInRoom', arrayContains: username)
+        .where('userInRoom', arrayContains: uid)
         .snapshots(includeMetadataChanges: true);
   }
 }

@@ -42,8 +42,8 @@ class _ContactItemState extends ConsumerState<ContactItem> {
           width: 17.w,
         ),
         Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(widget.name),
             SizedBox(

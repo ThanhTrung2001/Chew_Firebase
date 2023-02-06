@@ -5,7 +5,8 @@ import 'package:firebase_tutorial/services/user/user_service.dart';
 import 'package:firebase_tutorial/views/components/buttons/button_login.dart';
 import 'package:firebase_tutorial/views/components/dialogs/dialog_notification/dialog_error.dart';
 import 'package:firebase_tutorial/views/components/textfields/textfield_login.dart';
-import 'package:firebase_tutorial/views/screens/home/home.dart';
+import 'package:firebase_tutorial/views/components/textfields/textfield_password.dart';
+import 'package:firebase_tutorial/views/screens/post/current_user/post.dart';
 import 'package:firebase_tutorial/views/screens/login/widgets/thirdparty_login_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -97,12 +98,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                LoginInputTextField(
-                    controller: passController, hint: 'Password'),
+                PasswordTextField(controller: passController, hint: 'Password'),
                 SizedBox(
                   height: 20.h,
                 ),
-                LoginInputTextField(
+                PasswordTextField(
                     controller: passRetypeController, hint: 'Retype password'),
                 SizedBox(
                   height: 11.h,

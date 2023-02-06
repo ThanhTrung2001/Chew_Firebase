@@ -3,7 +3,7 @@ import 'package:firebase_tutorial/config/app_icons.dart';
 import 'package:firebase_tutorial/services/user/user_service.dart';
 import 'package:firebase_tutorial/views/screens/chat/chat.dart';
 import 'package:firebase_tutorial/views/screens/contact/contact.dart';
-import 'package:firebase_tutorial/views/screens/home/home.dart';
+import 'package:firebase_tutorial/views/screens/post/current_user/post.dart';
 import 'package:firebase_tutorial/views/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
 
@@ -53,7 +53,7 @@ class _MainScreenState extends State<MainScreen> {
           controller: pageController,
           onPageChanged: onPageChanged,
           children: const [
-            HomeScreen(),
+            PostScreen(),
             ProfileScreen(),
             ContactScreen(),
             ChatScreen(),

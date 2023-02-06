@@ -4,6 +4,7 @@ import 'package:firebase_tutorial/views/components/buttons/button_login.dart';
 import 'package:firebase_tutorial/views/components/buttons/button_mini_login.dart';
 import 'package:firebase_tutorial/views/components/dialogs/dialog_notification/dialog_warning.dart';
 import 'package:firebase_tutorial/views/components/textfields/textfield_login.dart';
+import 'package:firebase_tutorial/views/components/textfields/textfield_password.dart';
 import 'package:firebase_tutorial/views/screens/login/widgets/thirdparty_login_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -92,12 +93,12 @@ class _ChangePassScreenState extends ConsumerState<ChangePassScreen> {
                 SizedBox(
                   height: 24.h,
                 ),
-                LoginInputTextField(
+                PasswordTextField(
                     controller: newPassController, hint: 'New password'),
                 SizedBox(
                   height: 20.h,
                 ),
-                LoginInputTextField(
+                PasswordTextField(
                     controller: retypeNewPassController,
                     hint: 'Retype new password'),
                 SizedBox(

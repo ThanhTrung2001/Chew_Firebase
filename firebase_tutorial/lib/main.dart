@@ -3,14 +3,14 @@ import 'package:firebase_tutorial/views/screens/chat/video_call.dart';
 import 'package:firebase_tutorial/views/screens/chat/video_call_main.dart';
 import 'package:firebase_tutorial/views/screens/chat/voice_call.dart';
 import 'package:firebase_tutorial/views/screens/chat/voice_call_main.dart';
-import 'package:firebase_tutorial/views/screens/home/home.dart';
-import 'package:firebase_tutorial/views/screens/home/mainscreen.dart';
+import 'package:firebase_tutorial/views/screens/mainscreen.dart';
 import 'package:firebase_tutorial/views/screens/login/change_pass.dart';
 import 'package:firebase_tutorial/views/screens/login/forget.dart';
 import 'package:firebase_tutorial/views/screens/login/login.dart';
 import 'package:firebase_tutorial/views/screens/login/signup.dart';
 import 'package:firebase_tutorial/views/screens/login/verify.dart';
 import 'package:firebase_tutorial/views/screens/login/waiting.dart';
+import 'package:firebase_tutorial/views/screens/post/current_user/post.dart';
 import 'package:firebase_tutorial/views/screens/profile/profile.dart';
 import 'package:firebase_tutorial/views/screens/splash/splash.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
                 '/changepass': (context) => const ChangePassScreen(),
                 '/waiting': (context) => const WaitingScreen(),
                 '/': (context) => const MainScreen(),
-                '/home': (context) => const HomeScreen(),
+                '/home': (context) => const PostScreen(),
                 '/profile': (context) => const ProfileScreen(),
                 '/voice_test': (context) => const VoiceCallingScreen(),
                 '/voice': (context) => const VoiceCallMainScreen(),

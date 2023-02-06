@@ -27,12 +27,12 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     if (searchController.text == "") {
       setState(() {
         chatRoomStream = chatRoomFunction
-            .getChatRoomList(FirebaseAuth.instance.currentUser?.displayName);
+            .getChatRoomList(FirebaseAuth.instance.currentUser?.uid);
       });
     } else {
       setState(() {
         chatRoomStream = chatRoomFunction
-            .getChatRoomList(FirebaseAuth.instance.currentUser?.displayName);
+            .getChatRoomList(FirebaseAuth.instance.currentUser?.uid);
       });
     }
   }
@@ -40,7 +40,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   @override
   void initState() {
     chatRoomStream = chatRoomFunction
-        .getChatRoomList(FirebaseAuth.instance.currentUser?.displayName);
+        .getChatRoomList(FirebaseAuth.instance.currentUser?.uid);
     super.initState();
   }
 
